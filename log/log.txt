@@ -1,0 +1,1 @@
+Created a index.php for the intialization of the website
