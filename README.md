@@ -1,0 +1,2 @@
+# Medicine-Dispencing-System
+This project aims to aid in health institutes in the admission of medicine, its handling and storage. It takes in patient data to track dosage patterns where it also reminds them on when and where to pick the medicine. THe hospitals cans foresee a shortage in a type of medicine. It also ensures that patients with chronic or fatal diseases should get priority. The director of the health institute is also able to track revenue on the medicine.
