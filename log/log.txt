@@ -1,1 +1,3 @@
 Created a index.php for the intialization of the website
+Created a database design for the system
+Establish connection to database
