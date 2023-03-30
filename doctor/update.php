@@ -2,7 +2,7 @@
 include('data.php');
 //establish connection to database
 include('dbconnect.php');
-include('patientoverall.php');
+include('doctoroverall.php');
 $patid = 0;
 foreach($data as $dat):
     if($email == $dat['email']){
@@ -21,7 +21,7 @@ endforeach;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
     <style>
-        #profile{
+        #update{
             border-bottom: 10px solid #111d13;
         }
         th,td{

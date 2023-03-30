@@ -1,8 +1,12 @@
 <?php
+include('data.php');
 //establish connection to database
 include('dbconnect.php');
 include('doctoroverall.php');
-include('data.php');
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -19,6 +23,10 @@ include('data.php');
     </style>
 </head>
 <body>
-
+    <div id="central"> <p> Welcome <?php echo $fname."<br>"; ?></p> </div>
+<!-- //end of content -->
+</div>
+    
+    
 </body>
 </html>

@@ -22,7 +22,7 @@ if(isset($_POST['submit'])){
     else{
          $pass = $_POST['password'];
          $sql = 'SELECT firstname,lastname,email,password FROM patient';
-         $sql2 = 'SELECT firstname,lastname,email,password,type FROM doctor';
+         $sql2 = 'SELECT firstname,lastname,email,password FROM doctor';
          //make query and get result
          $result = mysqli_query($conn, $sql);
          $result2 = mysqli_query($conn, $sql2);
@@ -49,32 +49,18 @@ if(isset($_POST['submit'])){
           //compare the emails and password inputs to the ones in the doctor table
         foreach($data2 as $dat2):
             if($emai == $dat2['email']){
-                if($dat2['type'] == 1){
                     if($pass == $dat2['password'])
                     {
                         $myfile = fopen("doctor/data.txt", "w");
-                        $emaildata = $dat['email'];
+                        $emaildata = $dat2['email'];
                         fwrite($myfile,$emaildata);
                         fclose($myfile);
                         $message='Login successfull';
                         sleep(1);
                         header("location:doctor/home.php");
                     }
-                } //director table
-                if($dat2['type']== 2){
-                    if($pass == $dat2['password'])
-                {
-                    $myfile = fopen("director/data.txt", "w");
-                    $emaildata = $dat['email'];
-                    fwrite($myfile,$emaildata);
-                    fclose($myfile);
-                    $message='Login successfull';
-                    sleep(1);
-                    header("location:director/home.php");
-                }
-                }
+                } //doctor table
                 
-           }
         endforeach;
         }
     $message = 'Incorrect info';    

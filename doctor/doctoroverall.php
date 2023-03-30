@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel ="stylesheet" href="index.css">
     <style>
         body{
             font-family: 'Open Sans', sans-serif;          
@@ -19,7 +20,7 @@
         #navpane{
             display:flex;
             flex-direction: row;
-            background-color: #03045e;
+            background-color: #1d3557;
             justify-content: space-evenly;
             color: antiquewhite;
             text-shadow: 0 0 3px black;
@@ -27,7 +28,7 @@
         #sidepane{
             display:flex;
             flex-direction: column;
-            background-color: #0077b6;
+            background-color: #457b9d;
             justify-content: space-evenly;
             height:100vh;
             color:antiquewhite;
@@ -78,21 +79,22 @@
         }
 
     </style>
+    <script src="https://kit.fontawesome.com/57a72e588d.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div id="navpane">
         <a href="home.php" style="text-decoration: none; color:white;"><div class="elements" id="navhome"><h5>Home</h5></div></a>
-        <a href="order.php" style="text-decoration: none; color:white;"><div class="elements" id="navorder"><h5>Order</h5></div></a>
-        <a href="history.php" style="text-decoration: none; color:white;"><div class="elements" id="navhistory"><h5>History</h5></div></a>
-        <a href="profile.php" style="text-decoration: none; color:white;"><div class="elements" id="navprofile"><h5>Profile</h5></div></a>
+        <a href="stock.php" style="text-decoration: none; color:white;"><div class="elements" id="navorder"><h5>Stock</h5></div></a>
+        <a href="allocate.php" style="text-decoration: none; color:white;"><div class="elements" id="navhistory"><h5>Allocate</h5></div></a>
+        <a href="update.php" style="text-decoration: none; color:white;"><div class="elements" id="navprofile"><h5>Update</h5></div></a>
     </div>
     <div id="con">
         <div id="enlarged">
             <div id="sidepane">
-                <a href="home.php" style="text-decoration: none; color:white;"><div class="side-elements" id="home"><h5>Home</h5></div></a>
-                <a href="order.php" style="text-decoration: none; color:white;"><div class="side-elements" id="order"><h5>Order</h5></div></a>
-                <a href="history.php" style="text-decoration: none; color:white;"><div class="side-elements" id="history"><h5>History</h5></div></a>
-                <a href="profile.php" style="text-decoration: none; color:white;"><div class="side-elements" id="profile"><h5>Profile</h5></div></a>
+                <a href="home.php" style="text-decoration: none; color:white;"><div class="side-elements" id="home"><div class="icons"><i class="fa-solid fa-home"></i></div><div class="text"><h5>Home</h5></div></div></a>
+                <a href="stock.php" style="text-decoration: none; color:white;"><div class="side-elements" id="stock"><div class="icons"><i class="fa-solid fa-warehouse"></i></div><div class="text"><h5>Stock</h5></div></div></a>
+                <a href="allocate.php" style="text-decoration: none; color:white;"><div class="side-elements" id="allocate"><div class="icons"><i class="fa-solid fa-handshake"></i></div><div class="text"><h5>Allocate</h5></div></div></a>
+                <a href="update.php" style="text-decoration: none; color:white;"><div class="side-elements" id="update"><div class="icons"><i class="fa-solid fa-pen"></i></div><div class="text"><h5>Update</h5></div></div></a>
             </div>
         </div>
         <!-- <div id="central">aa</div>

@@ -3,7 +3,7 @@
 include('data.php');
 //establish connection to database
 include('dbconnect.php');
-include('patientoverall.php');
+include('doctoroverall.php');
 foreach($data as $dat):
     if($email == $dat['email']){
         $idpat = $dat['id'];
@@ -19,7 +19,7 @@ endforeach;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>History page</title>
     <style>
-        #history{
+        #allocate{
             border-bottom: 10px solid #111d13;
         }
         #historyorg{

@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel ="stylesheet" href="index.css">
     <style>
         body{
             font-family: 'Open Sans', sans-serif;          
@@ -35,6 +36,7 @@
         }
         .elements{
            height:10vh;
+           
         }
         .side-elements{
            display:flex;
@@ -76,8 +78,11 @@
         h3{
             color:red;
         }
-
+        .icons:hover{
+            transform:scale(1.5);
+        }
     </style>
+    <script src="https://kit.fontawesome.com/57a72e588d.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div id="navpane">
@@ -89,10 +94,10 @@
     <div id="con">
         <div id="enlarged">
             <div id="sidepane">
-                <a href="home.php" style="text-decoration: none; color:white;"><div class="side-elements" id="home"><h5>Home</h5></div></a>
-                <a href="order.php" style="text-decoration: none; color:white;"><div class="side-elements" id="order"><h5>Order</h5></div></a>
-                <a href="history.php" style="text-decoration: none; color:white;"><div class="side-elements" id="history"><h5>History</h5></div></a>
-                <a href="profile.php" style="text-decoration: none; color:white;"><div class="side-elements" id="profile"><h5>Profile</h5></div></a>
+                <a href="home.php" style="text-decoration: none; color:white;"><div class="side-elements" id="home"><div class="icons"><i class="fa-solid fa-home"></i></div><div class="text"><h5>Home</h5></div></div></a>
+                <a href="order.php" style="text-decoration: none; color:white;"><div class="side-elements" id="order"><div class="icons"><i class="fa-solid fa-magnifying-glass"></i></div><div class="text"><h5>Order</h5></div></div></a>
+                <a href="history.php" style="text-decoration: none; color:white;"><div class="side-elements" id="history"><div class="icons"><i class="fa-solid fa-book"></i></div><div class="text"><h5>History</h5></div></div></a>
+                <a href="profile.php" style="text-decoration: none; color:white;"><div class="side-elements" id="profile"><div class="icons"><i class="fa-solid fa-user"></i></div><div class="text"><h5>Profile</h5></div></div></a>
             </div>
         </div>
     
