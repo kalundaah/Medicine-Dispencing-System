@@ -3,111 +3,7 @@ include('data.php');
 //establish connection to database
 include('dbconnect.php');
 include('doctoroverall.php');
-
-$errors = array('emal' => '','medicin' => '','medtype'=> '');
-$emai = $medicin = $typmed= '';
-$mednos = 0;
-$typnos = 0;
-$message = '';
-if(isset($_POST['find'])){
-    if(empty($_POST['medicine'])){
-        $errors['medicin'] = 'NO VALID MEDICINE LISTED <br />';
-    } 
-    else{
-        $medicin = $_POST['medicine'];
-
-        $sql = 'SELECT id,name,type FROM medicine';
-        $sql2 = 'SELECT id,type FROM medicinetype';
-        //make query and get result
-        $result = mysqli_query($conn, $sql);
-        $result2 = mysqli_query($conn, $sql2);
-        //fetch the resulting rows
-        $data = mysqli_fetch_all($result,MYSQLI_ASSOC); //medicine
-        $data2 = mysqli_fetch_all($result2,MYSQLI_ASSOC); //medicinetype
-
-        //compare the medicine names inputs to the ones in the patient table
-        foreach($data as $dat):
-            if($medicin == $dat['name']){
-                $mednos = $dat['id'];
-                $typnos = $dat['type'];
-            }
-        endforeach;
-
-    
-        //compare the emails and password inputs to the ones in the doctor table
-        foreach($data2 as $dat2):
-            if($typnos==0){
-                die('MEDICINE IS NOT FOUND');
-            }
-            elseif($typnos == $dat2['id']){
-                $typmed = $dat2['type'];
-            }
-        endforeach;
-        }
-    echo $patnos.$mednos;
-}
-if(isset($_POST['submit'])){
-    $sql = 'SELECT id,email FROM patient';
-
-    //make query and get result
-    $result = mysqli_query($conn, $sql);
-
-    //fetch the resulting rows
-    $data = mysqli_fetch_all($result,MYSQLI_ASSOC); //patient
-    foreach($data as $dat):
-        if($email == $dat['email']){
-            $patnos = $dat['id'];
-    }
-    endforeach;
-
-    if(empty($_POST['medicine'])){
-        $errors['medicin'] = 'A password is required <br />';
-    }
-    else{
-        $medicin = $_POST['medicine'];
-
-        $sql = 'SELECT id,name,type FROM medicine';
-        $sql2 = 'SELECT id,type FROM medicinetype';
-        //make query and get result
-        $result = mysqli_query($conn, $sql);
-        $result2 = mysqli_query($conn, $sql2);
-        //fetch the resulting rows
-        $data = mysqli_fetch_all($result,MYSQLI_ASSOC); //medicine
-        $data2 = mysqli_fetch_all($result2,MYSQLI_ASSOC); //medicinetype
-
-        //compare the medicine names inputs to the ones in the patient table
-        foreach($data as $dat):
-            if($medicin == $dat['name']){
-                $mednos = $dat['id'];
-                $typnos = $dat['type'];
-            }
-        endforeach;
-
-    
-        //compare the emails and password inputs to the ones in the doctor table
-        foreach($data2 as $dat2):
-            if($typnos==0){
-                die('MEDICINE IS NOT FOUND');
-            }
-            elseif($typnos == $dat2['id']){
-                $typmed = $dat2['type'];
-            }
-        endforeach;
-
-    }
-    if(empty($_POST['medicinetype'])){
-        $errors['medtype'] = 'The medicine should be listed <br />';
-    }
-               
-    $sql = "INSERT INTO orders(patient,medicine) VALUES ($patnos,$mednos)";
-
-    //save to db and check
-    if(mysqli_query($conn,$sql)){
-        header("location:history.php");
-    } else{
-        echo 'query error: '.mysqli_error($conn); 
-    }     
-}      
+        
 ?>
 
 <!DOCTYPE html>
@@ -121,29 +17,64 @@ if(isset($_POST['submit'])){
         #stock{
             border-bottom: 10px solid #111d13;
         }
+        table,tr,td{
+        border: 1px solid black;
+        margin:10px;
+        
+        }
+  
+
+
     </style>
 </head>
 <body>
     <div id="central">
-        <form action="order.php" method="POST" style="display: flex; flex-direction: column; margin: 50px 20%;">
+        <h6>AVAILABLE MEDICINE</h6>
+        <table>
+                <tr>
+                    <th>Medicine Name</th>
+                    <th>Medicine Type</th>
+                    <th>Medicine description<th>
+                    <th>Available Amount<th>                        
+                </tr>
+                <?php   
+                    $sqlmed = 'SELECT name,type,availableamt FROM medicine';
+                    $sqltype = 'SELECT id,type,priority,description FROM medicinetype';
 
-        <label for="email" style="margin:20px,0;">Your email: </label>
-        <input disabled type="text" name="email" value ="<?php echo htmlspecialchars($email); ?>" >
-        <div class="errormessage" style="color:red; margin:20px,0;"><?php echo($errors['emal']);  ?></div>
+                    //make query and get result
+                    $resultmed = mysqli_query($conn, $sqlmed);
+                    $resulttype = mysqli_query($conn, $sqltype);
 
-        <label for="medicine" style="margin:20px,0;">Medicine: </label>
-        <input type="input" name="medicine" value="<?php echo htmlspecialchars($medicin);?>"> 
-        <button name="find">find</button>
+                    //fetch the resulting rows
+                    $datamed = mysqli_fetch_all($resultmed,MYSQLI_ASSOC); // medicine data
+                    $datatype = mysqli_fetch_all($resulttype,MYSQLI_ASSOC); //medicine tyoe data
 
-        <label for="medtype" style="margin:20px,0;">Medicine Type: </label>
-        <input type="input" disabled name="medicinetype" value="<?php echo htmlspecialchars($typmed);?>">
-        <div class="errormessage" style="color:red; margin:20px,0;"><?php echo($errors['medicin']);  ?></div>
-
-        <button name="submit">submit</button>
-
-        </form>
+                    foreach($datamed as $dat): ?>
+                        <div>
+                            <tr>
+                                <td> <h6> <?php echo htmlspecialchars($dat['name']); ?> </h6> </td>
+                                <td> <h6> <?php 
+                                foreach($datatype as $dat2): 
+                                    if($dat2['id'] == $dat['type'])
+                                    {
+                                        echo htmlspecialchars($dat2['type']);  
+                                    } endforeach; ?> </h6> </td>
+                                    <td> <h6> <?php
+                                    foreach($datatype as $dat2): 
+                                    if($dat2['id'] == $dat['type'])
+                                    {
+                                        echo htmlspecialchars($dat2['description']);  
+                                    } endforeach; ?> </h6> </td>
+                                <td id="lastno"> <h6> <?php echo htmlspecialchars($dat['availableamt']); ?> </h6> </td>
+                            </tr> 
+                        </div>
+                <?php endforeach;
+                 ?>
+                </table>
+        
     </div>
 <!-- //end of content -->
+
 </div>
 </body>
 </html>

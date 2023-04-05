@@ -9,6 +9,159 @@ foreach($data as $dat):
         $idpat = $dat['id'];
 }
 endforeach;
+$errors = array('emal' => '','medicin' => '','medtype'=> '','pat' =>'');
+$emai = $patemail = $medicin = $typmed= $patname= $sympt = $diag = '';
+$mednos = 0;
+$patnos = 0;
+$typnos = 0;
+$message = '';
+if(isset($_POST['findpat'])){
+    //find the listed patient through the email address\
+    if(empty($_POST['patientemail'])){
+        $errors['pat'] = 'NO VALID EMAIL LISTED <br />';
+    }
+    else{
+        $patemail = $_POST['patientemail'];
+        $sympt = $_POST['symptom'];
+        $diag = $_POST['diagn'];
+        $medicin = $_POST['medicine'];    
+        $typmed = $_POST['medtyp'];
+
+        $sql = 'SELECT id,email,firstname FROM patient';
+
+        //make query and get result
+        $result = mysqli_query($conn, $sql);
+
+        //fetch the resulting rows
+        $data = mysqli_fetch_all($result,MYSQLI_ASSOC); //patient
+        foreach($data as $datpatient):
+        if($patemail == $datpatient['email']){
+            $patnos = $datpatient['id'];
+            $patname = $datpatient['firstname'];
+            $errors['pat'] = 'EMAIL IS FOUND <br />';
+        }  
+        endforeach;
+        //free result from memory
+        mysqli_free_result($result);
+    }
+}
+if(isset($_POST['find'])){
+    if(empty($_POST['medicine'])){
+        $errors['medicin'] = 'NO VALID MEDICINE LISTED <br />';
+    } 
+    else{
+        $patemail = $_POST['patientemail'];
+        $sympt = $_POST['symptom'];
+        $diag = $_POST['diagn'];
+        $medicin = $_POST['medicine'];
+        $patname = $_POST['patname'];
+        if(empty($_POST['medtyp']))
+        {
+            $typmed = '';
+            
+        }
+        else{
+            $typmed = $_POST['medtyp'];
+        }
+
+        $sql = 'SELECT id,name,type FROM medicine';
+        $sql2 = 'SELECT id,type FROM medicinetype';
+        //make query and get result
+        $result = mysqli_query($conn, $sql);
+        $result2 = mysqli_query($conn, $sql2);
+        //fetch the resulting rows
+        $data = mysqli_fetch_all($result,MYSQLI_ASSOC); //medicine
+        $data2 = mysqli_fetch_all($result2,MYSQLI_ASSOC); //medicinetype
+
+        //compare the medicine names inputs to the ones in the patient table
+        foreach($data as $dat):
+            if($medicin == $dat['name']){
+                $mednos = $dat['id'];
+                $typnos = $dat['type'];
+            }
+        endforeach;
+
+    
+        //compare the emails and password inputs to the ones in the doctor table
+        foreach($data2 as $dat2):
+            if($typnos==0){
+                die('MEDICINE IS NOT FOUND');
+            }
+            elseif($typnos == $dat2['id']){
+                $typmed = $dat2['type'];
+            }
+        endforeach;
+        }
+
+    //free result from memory
+    mysqli_free_result($result);
+    mysqli_free_result($result2);
+
+}
+if(isset($_POST['submit'])){
+    $sql = 'SELECT id,email FROM patient';
+
+    //make query and get result
+    $result = mysqli_query($conn, $sql);
+
+    //fetch the resulting rows
+    $data = mysqli_fetch_all($result,MYSQLI_ASSOC); //patient
+    foreach($data as $dat):
+        if($email == $dat['email']){
+            $patnos = $dat['id'];
+    }
+    endforeach;
+
+    if(empty($_POST['medicine'])){
+        $errors['medicin'] = 'A password is required <br />';
+    }
+    else{
+        $medicin = $_POST['medicine'];
+
+        $sql = 'SELECT id,name,type FROM medicine';
+        $sql2 = 'SELECT id,type FROM medicinetype';
+        //make query and get result
+        $result = mysqli_query($conn, $sql);
+        $result2 = mysqli_query($conn, $sql2);
+        //fetch the resulting rows
+        $data = mysqli_fetch_all($result,MYSQLI_ASSOC); //medicine
+        $data2 = mysqli_fetch_all($result2,MYSQLI_ASSOC); //medicinetype
+
+        //compare the medicine names inputs to the ones in the patient table
+        foreach($data as $dat):
+            if($medicin == $dat['name']){
+                $mednos = $dat['id'];
+                $typnos = $dat['type'];
+            }
+        endforeach;
+
+    
+        //compare the emails and password inputs to the ones in the doctor table
+        foreach($data2 as $dat2):
+            if($typnos==0){
+                die('MEDICINE IS NOT FOUND');
+            }
+            elseif($typnos == $dat2['id']){
+                $typmed = $dat2['type'];
+            }
+        endforeach;
+
+    }
+    if(empty($_POST['medicinetype'])){
+        $errors['medtype'] = 'The medicine should be listed <br />';
+    }
+               
+    $sql = "INSERT INTO orders(patient,medicine) VALUES ($patnos,$mednos)";
+
+    //save to db and check
+    if(mysqli_query($conn,$sql)){
+        mysqli_free_result($result);
+        mysqli_free_result($result2);
+        header("location:history.php");
+    } else{
+        echo 'query error: '.mysqli_error($conn); 
+    }     
+}
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +170,7 @@ endforeach;
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>History page</title>
+    <title>Allocation</title>
     <style>
         #allocate{
             border-bottom: 10px solid #111d13;
@@ -54,131 +207,44 @@ endforeach;
 </head>
 <body>
     <div id="central">
-        <h7> The following are your recent transactions by category: </h7>
-        <div id="historyorg">
-            <div id="ordercol">
-                <h4>YOUR PAST ORDERS</h4>
-                <table>
-                <tr>
-                     <th>patient</th>
-                     <th>medicine</th>
-                     <th>Time and day<th>
-                </tr>
-                <?php   
-                    $sqlhis = 'SELECT patient,medicine,time_ordered FROM orders WHERE patient = '.$idpat ;
-                    $sqlmed = 'SELECT id,name FROM medicine';
-                    $sqldoc = 'SELECT id,firstname FROM doctor';
+    <form action="allocate.php" method="POST" style="display: flex; flex-direction: column; margin: 50px 20%;">
 
-                    //make query and get result
-                    $resulthis = mysqli_query($conn, $sqlhis);
-                    $resultmed = mysqli_query($conn, $sqlmed);
-                    $resultdoc = mysqli_query($conn, $sqldoc);
+        <label for="email" style="margin:100px,0;">Doctor name: </label>
+        <input disabled type="text" name="email" style="margin:100px,0;" value ="<?php echo htmlspecialchars($fname); ?>" >
+        <div class="errormessage" style="color:red; margin:100px,0;"><?php echo($errors['emal']);  ?></div>
 
-                    //fetch the resulting rows
-                    $datahis = mysqli_fetch_all($resulthis,MYSQLI_ASSOC); //past orders
-                    $datamed = mysqli_fetch_all($resultmed,MYSQLI_ASSOC); // medcine data
-                    $datadoc = mysqli_fetch_all($resultdoc,MYSQLI_ASSOC); //
-                    if(empty($datahis)){
-                        $empty = 'N/A'; ?>
-                        <div>
-                            <tr>
-                                <td> <h6> <?php echo htmlspecialchars($empty); ?> </h6></td> 
-                                <td> <h6> <?php echo htmlspecialchars($empty); ?> </h6> </td>  
-                                <td> <h6> <?php echo htmlspecialchars($empty); ?> </h6> </td>  
-                            </tr> 
-                        </div>
+        <label for="medicine" style="margin:100px,0;">Patient email: </label>
+        <input type="input" name="patientemail" style="margin:100px,0;" value="<?php echo htmlspecialchars($patemail);?>">
 
-                    <?php }
+        <button name="findpat">find patient</button>
+        <div class="errormessage" style="color:red; margin:100px,0;"><?php echo($errors['pat']);  ?></div>
 
-                    foreach($datahis as $dat): ?>
-                        <div>
-                            <tr>
-                                
-                                <td> <h6> <?php echo htmlspecialchars($fname); ?> </h6></td> 
-                                <td> <h6> <?php 
-                                foreach($datamed as $dat2): 
-                                    if($dat2['id'] == $dat['medicine'])
-                                    {
-                                        echo htmlspecialchars($dat2['name']);  
-                                    } endforeach; ?> </h6> </td>
-                                <td> <h6> <?php echo htmlspecialchars($dat['time_ordered']); ?> </h6> </td>
+        <label for="patname" style="margin:100px,0;">patient name: </label>
+        <input type="text" name="patname" style="margin:100px,0;" value ="<?php echo htmlspecialchars($patname); ?>" >
 
-                            </tr> 
-                        </div>
-                <?php endforeach;
-                 ?>
-                </table>
+        <label for="symptoms" style="margin:100px,0;">Recorded symptoms: </label>
+        <input type="input" name="symptom" style="margin:100px,0; height:150px;" value="<?php echo htmlspecialchars($sympt);?>">
 
-            </div>
-            <div id="allocatedcol">
-                <h4>YOUR PAST ALLOCATIONS</h4>
-                <table>
-                <tr>
-                     <th>patient</th>
-                     <th>doctor</th>
-                     <th>medicine</th>
-                     <th>initial allocation</th>
-                     <th>current allocation</th>
-                     <th>finished</th>
-                </tr>
-                <?php
-                    $sqlall = 'SELECT patient,doctor,medicine,initial,current,finished FROM allocation WHERE patient = '.$idpat;
-                    //make query and get result
-                    $result2 = mysqli_query($conn, $sqlall);
+        <label for="diagnosis" style="margin:100px,0;">Diagnosis: </label>
+        <input type="input" name="diagn" style="margin:100px,0;" value="<?php echo htmlspecialchars($diag);?>">
 
-                    //fetch the resulting rows
-                    $dataall = mysqli_fetch_all($result2,MYSQLI_ASSOC); //patient
-                    if(empty($dataall)){
-                        $empty = 'N/A'; ?>
-                        <div>
-                            <tr>
-                                <td> <h6> <?php echo htmlspecialchars($empty); ?> </h6></td> 
-                                <td> <h6> <?php echo htmlspecialchars($empty); ?> </h6> </td>  
-                                <td> <h6> <?php echo htmlspecialchars($empty); ?> </h6> </td>
-                                <td> <h6> <?php echo htmlspecialchars($empty); ?> </h6> </td>
-                                <td> <h6> <?php echo htmlspecialchars($empty); ?> </h6> </td>
-                                <td> <h6> <?php echo htmlspecialchars($empty); ?> </h6> </td>  
-                            </tr> 
-                        </div>
+        <label for="medicine" style="margin:100px,0;">Medicine: </label>
+        <input type="input" name="medicine" style="margin:100px,0;" value="<?php echo htmlspecialchars($medicin);?>"> 
+        <button name="find">find medicine</button>
+        
+        <label for="medtype" style="margin:100px,0;">Medicine Type: </label>
+        <input type="input" name="medtyp" style="margin:100px,0;" value="<?php echo htmlspecialchars($typmed);?>">
+        <div class="errormessage" style="color:red; margin:100px,0;"><?php echo($errors['medicin']);  ?></div>
 
-                    <?php }
+        <button name="submit">submit</button>
 
-                    foreach($dataall as $dat2): ?>
-                        <div>
-                            <tr>
-                                <td> <h6> <?php echo htmlspecialchars($fname); ?> </h6></td> 
-                                <td> <h6>  <?php 
-                                foreach($datadoc as $dat3): 
-                                    if($dat3['id'] == $dat2['doctor'])
-                                    {
-                                        echo htmlspecialchars($dat3['firstname']);  
-                                    } endforeach; ?> </h6> </td>  
-                                <td> <h6>  <?php 
-                                foreach($datamed as $dat4): 
-                                    if($dat4['id'] == $dat2['medicine'])
-                                    {
-                                        echo htmlspecialchars($dat4['name']);  
-                                    } endforeach; ?> </h6> </td>  
-                                <td> <h6> <?php echo htmlspecialchars($dat2['initial']); ?> </h6> </td>  
-                                <td> <h6> <?php echo htmlspecialchars($dat2['current']); ?> </h6> </td>  
-                                <td> <h6> <?php echo htmlspecialchars($dat2['finished']); ?> </h6> </td>
-                            </tr> 
-                        </div>
-                <?php endforeach;
-                 ?>
-                </table>
-            </div>
-        </div>
+    </form>
 
     </div>
 <!-- //end of content -->
 </div>
 <?php 
-    //free result from memory
-    mysqli_free_result($resulthis);
-    mysqli_free_result($resultpat);
-    mysqli_free_result($resultmed);
-    mysqli_free_result($resultdoc);
+
 
 ?>
 </body>

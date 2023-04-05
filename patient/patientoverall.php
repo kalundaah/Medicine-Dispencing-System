@@ -11,7 +11,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
-    <link rel ="stylesheet" href="index.css">
     <style>
         body{
             font-family: 'Open Sans', sans-serif;          
@@ -33,6 +32,8 @@
             height:100vh;
             color:antiquewhite;
             text-shadow: 0 0 4px black;
+            max-height: 100vh;
+            overflow:hidden;
         }
         .elements{
            height:10vh;
@@ -74,6 +75,8 @@
             width: 100%;
             color: black;
             text-shadow: 0 0 1px black;
+            max-height: 100vh;
+            overflow: auto;
         }
         h3{
             color:red;

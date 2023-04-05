@@ -98,8 +98,8 @@ if(isset($_POST['submit'])){
     if(empty($_POST['medicinetype'])){
         $errors['medtype'] = 'The medicine should be listed <br />';
     }
-               
-    $sql = "INSERT INTO orders(patient,medicine) VALUES ($patnos,$mednos)";
+    $res = 'no';         
+    $sql = "INSERT INTO orders(patient,medicine,satisfied) VALUES ($patnos,$mednos,$res)";
 
     //save to db and check
     if(mysqli_query($conn,$sql)){
