@@ -10,13 +10,15 @@ foreach($data as $dat):
 }
 endforeach;
 $errors = array('patemail' => '','sympterror' => '','diagnosiserror' => '', 'mederror' => '','amounterror' => '','dateerror'=>'');
-$patient_email = $symptom = $diagnosis = $medicine_name = '';
+$patient_email = $symptom = $diagnosis = $medicine_name = $message = '';
 $date = '0000-00-00';
 
 $amount = 0;
 $idpat = 0;
 $idmedicine = 0;
 $available = 0;
+$new = 0;
+$prev = 0;
 
 if(isset($_POST['submit'])){
     if(empty($_POST['patientemail'])){
@@ -60,13 +62,14 @@ if(isset($_POST['submit'])){
     }
     else{
         $medicine_name = $_POST['medicine'];
-        $sqlmed = 'SELECT id,name,availableamt FROM medicine';
+        $sqlmed = 'SELECT id,name,availableamt,totalsold FROM medicine';
         $result2 = mysqli_query($conn,$sqlmed);
         $datamedicine = mysqli_fetch_all($result2,MYSQLI_ASSOC);
         foreach($datamedicine as $datmed):
             if($medicine_name == $datmed['name']){
                 $idmedicin = $datmed['id'];
                 $available = $datmed['availableamt'];
+                $prev = $datmed['totalsold'];
 
         }
         endforeach;
@@ -111,12 +114,18 @@ if(isset($_POST['submit'])){
             $sqlall = "INSERT INTO allocation(patient,doctor,medicine,allocated,scenario,expected) VALUES ($idpat,$iddoc,$idmedicin,$amount,$last_id,'$date')";
             if(mysqli_query($conn,$sqlall)){
                 $new = $available - $amount;
+                $prev = $prev + $amount;
                 $sqlupd = "UPDATE medicine SET availableamt = $new WHERE medicine.id = $idmedicin";
                 if(mysqli_query($conn,$sqlupd)){
-                    header("location:history.php");
+                    $sqltot = "UPDATE medicine SET totalsold = $prev WHERE medicine.id = $idmedicin";
+                    if(mysqli_query($conn,$sqltot)){
+                        $message = 'Medicine Allocated';
+                    }else{
+                        echo 'query error: '.mysqli_error($conn);
+                    } 
                 }else{
                     echo 'query error: '.mysqli_error($conn);
-                }    
+                }          
 
             }else{
                 echo 'query error: '.mysqli_error($conn); 
@@ -171,11 +180,27 @@ if(isset($_POST['submit'])){
         td,tr{
             border: 1px solid white;
         }
+        #entry{
+            background-color: lightgreen;
+        }
+        #confirmation{
+            margin-left: 50vh;
+            margin-right: auto;
+            text-transform: capitalize;
+            font-size: larger;
+            color: red;
+        }
 
     </style>
 </head>
 <body>
     <div id="central">
+        <div id="all">
+            <a href="allocate.php" style="text-decoration: none; color:white;"><div class="allmenu" id="entry">ENTRY</div></a>
+            <a href="history.php" style="text-decoration: none; color:white;"><div class="allmenu" id="history">HISTORY</div></a>
+            
+        </div>
+        <h6 id = "confirmation"><?php echo htmlspecialchars($message)?></h6> 
     <form action="allocate.php" method="POST" style="display: flex; flex-direction: column; margin: 50px 20%;">
 
         <label for="doctor name" style="margin:100px,0;">Doctor name: </label>
@@ -208,7 +233,7 @@ if(isset($_POST['submit'])){
         <button name="submit">submit</button>
 
     </form>
-
+        
     </div>
 <!-- //end of content -->
 </div>

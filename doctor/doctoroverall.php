@@ -15,6 +15,7 @@
         body{
             font-family: 'Open Sans', sans-serif;          
             margin: 0;
+            text-shadow: 0 0 3px black;
         }
         #navpane{
             display:flex;
@@ -79,6 +80,18 @@
         }
         h3{
             color:red;
+        }
+        .allmenu{
+            background-color: #457b9d;
+            border:10px solid white;
+            height:50px;
+            width:70px;
+            
+        }
+        #all{
+            display:flex;
+            flex-direction: row;
+            justify-content: space-around;
         }
 
     </style>
