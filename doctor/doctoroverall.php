@@ -18,6 +18,7 @@
         }
         #navpane{
             display:flex;
+            
             flex-direction: row;
             background-color: #1d3557;
             justify-content: space-evenly;
@@ -73,8 +74,8 @@
             width: 100%;
             color: black;
             text-shadow: 0 0 1px black;
-            max-height: 100vh;
-            overflow: auto;
+            /* max-height: 100vh;
+            overflow: auto; */
         }
         h3{
             color:red;

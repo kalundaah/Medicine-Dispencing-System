@@ -6,161 +6,130 @@ include('dbconnect.php');
 include('doctoroverall.php');
 foreach($data as $dat):
     if($email == $dat['email']){
-        $idpat = $dat['id'];
+        $iddoc = $dat['id'];
 }
 endforeach;
-$errors = array('emal' => '','medicin' => '','medtype'=> '','pat' =>'');
-$emai = $patemail = $medicin = $typmed= $patname= $sympt = $diag = '';
-$mednos = 0;
-$patnos = 0;
-$typnos = 0;
-$message = '';
-if(isset($_POST['findpat'])){
-    //find the listed patient through the email address\
-    if(empty($_POST['patientemail'])){
-        $errors['pat'] = 'NO VALID EMAIL LISTED <br />';
-    }
-    else{
-        $patemail = $_POST['patientemail'];
-        $sympt = $_POST['symptom'];
-        $diag = $_POST['diagn'];
-        $medicin = $_POST['medicine'];    
-        $typmed = $_POST['medtyp'];
+$errors = array('patemail' => '','sympterror' => '','diagnosiserror' => '', 'mederror' => '','amounterror' => '','dateerror'=>'');
+$patient_email = $symptom = $diagnosis = $medicine_name = '';
+$date = '0000-00-00';
 
-        $sql = 'SELECT id,email,firstname FROM patient';
+$amount = 0;
+$idpat = 0;
+$idmedicine = 0;
+$available = 0;
 
-        //make query and get result
-        $result = mysqli_query($conn, $sql);
-
-        //fetch the resulting rows
-        $data = mysqli_fetch_all($result,MYSQLI_ASSOC); //patient
-        foreach($data as $datpatient):
-        if($patemail == $datpatient['email']){
-            $patnos = $datpatient['id'];
-            $patname = $datpatient['firstname'];
-            $errors['pat'] = 'EMAIL IS FOUND <br />';
-        }  
-        endforeach;
-        //free result from memory
-        mysqli_free_result($result);
-    }
-}
-if(isset($_POST['find'])){
-    if(empty($_POST['medicine'])){
-        $errors['medicin'] = 'NO VALID MEDICINE LISTED <br />';
-    } 
-    else{
-        $patemail = $_POST['patientemail'];
-        $sympt = $_POST['symptom'];
-        $diag = $_POST['diagn'];
-        $medicin = $_POST['medicine'];
-        $patname = $_POST['patname'];
-        if(empty($_POST['medtyp']))
-        {
-            $typmed = '';
-            
-        }
-        else{
-            $typmed = $_POST['medtyp'];
-        }
-
-        $sql = 'SELECT id,name,type FROM medicine';
-        $sql2 = 'SELECT id,type FROM medicinetype';
-        //make query and get result
-        $result = mysqli_query($conn, $sql);
-        $result2 = mysqli_query($conn, $sql2);
-        //fetch the resulting rows
-        $data = mysqli_fetch_all($result,MYSQLI_ASSOC); //medicine
-        $data2 = mysqli_fetch_all($result2,MYSQLI_ASSOC); //medicinetype
-
-        //compare the medicine names inputs to the ones in the patient table
-        foreach($data as $dat):
-            if($medicin == $dat['name']){
-                $mednos = $dat['id'];
-                $typnos = $dat['type'];
-            }
-        endforeach;
-
-    
-        //compare the emails and password inputs to the ones in the doctor table
-        foreach($data2 as $dat2):
-            if($typnos==0){
-                die('MEDICINE IS NOT FOUND');
-            }
-            elseif($typnos == $dat2['id']){
-                $typmed = $dat2['type'];
-            }
-        endforeach;
-        }
-
-    //free result from memory
-    mysqli_free_result($result);
-    mysqli_free_result($result2);
-
-}
 if(isset($_POST['submit'])){
-    $sql = 'SELECT id,email FROM patient';
-
-    //make query and get result
-    $result = mysqli_query($conn, $sql);
-
-    //fetch the resulting rows
-    $data = mysqli_fetch_all($result,MYSQLI_ASSOC); //patient
-    foreach($data as $dat):
-        if($email == $dat['email']){
-            $patnos = $dat['id'];
-    }
-    endforeach;
-
-    if(empty($_POST['medicine'])){
-        $errors['medicin'] = 'A password is required <br />';
+    if(empty($_POST['patientemail'])){
+        $errors['patemal'] = 'An email is required <br />';
     }
     else{
-        $medicin = $_POST['medicine'];
-
-        $sql = 'SELECT id,name,type FROM medicine';
-        $sql2 = 'SELECT id,type FROM medicinetype';
-        //make query and get result
-        $result = mysqli_query($conn, $sql);
-        $result2 = mysqli_query($conn, $sql2);
-        //fetch the resulting rows
-        $data = mysqli_fetch_all($result,MYSQLI_ASSOC); //medicine
-        $data2 = mysqli_fetch_all($result2,MYSQLI_ASSOC); //medicinetype
-
-        //compare the medicine names inputs to the ones in the patient table
-        foreach($data as $dat):
-            if($medicin == $dat['name']){
-                $mednos = $dat['id'];
-                $typnos = $dat['type'];
-            }
+        $patient_email = $_POST['patientemail'];
+        if(!filter_var($patient_email,FILTER_VALIDATE_EMAIL)){
+            $errors['patemail'] = 'email must be a valid email adress';
+        }
+        $sqlpat = 'SELECT id,email FROM patient';
+        $result = mysqli_query($conn,$sqlpat);
+        $datapatient = mysqli_fetch_all($result,MYSQLI_ASSOC);
+        foreach($datapatient as $datpat):
+            if($patient_email == $datpat['email']){
+                $idpat = $datpat['id'];
+        }
         endforeach;
-
-    
-        //compare the emails and password inputs to the ones in the doctor table
-        foreach($data2 as $dat2):
-            if($typnos==0){
-                die('MEDICINE IS NOT FOUND');
-            }
-            elseif($typnos == $dat2['id']){
-                $typmed = $dat2['type'];
-            }
-        endforeach;
-
-    }
-    if(empty($_POST['medicinetype'])){
-        $errors['medtype'] = 'The medicine should be listed <br />';
-    }
-               
-    $sql = "INSERT INTO orders(patient,medicine) VALUES ($patnos,$mednos)";
-
-    //save to db and check
-    if(mysqli_query($conn,$sql)){
+        if($idpat == 0){
+            $errors['patemail'] = 'INCORRECT EMAIL';
+        }
         mysqli_free_result($result);
+    }
+
+    if(empty($_POST['patientemail'])){
+        $errors['sympterror'] = 'Symptoms report required <br />';
+    }
+    else{
+        $symptom = $_POST['symptoms'];
+    }
+
+    if(empty($_POST['diagn'])){
+        $errors['diagnosiserror'] = 'Diagnosis report required <br />';
+    }
+    else{
+        $diagnosis = $_POST['diagn'];
+    }
+
+    if(empty($_POST['medicine'])){
+        $errors['mederror'] = 'Medicine name is required <br />';
+    }
+    else{
+        $medicine_name = $_POST['medicine'];
+        $sqlmed = 'SELECT id,name,availableamt FROM medicine';
+        $result2 = mysqli_query($conn,$sqlmed);
+        $datamedicine = mysqli_fetch_all($result2,MYSQLI_ASSOC);
+        foreach($datamedicine as $datmed):
+            if($medicine_name == $datmed['name']){
+                $idmedicin = $datmed['id'];
+                $available = $datmed['availableamt'];
+
+        }
+        endforeach;
+        if($idmedicin == 0){
+            $errors['mederror'] = 'INCORRECT EMAIL';
+        }
         mysqli_free_result($result2);
-        header("location:history.php");
-    } else{
-        echo 'query error: '.mysqli_error($conn); 
-    }     
+    }
+    if(empty($_POST['medamt'])){
+        $errors['amounterror'] = 'Please enter a valid amount <br />';
+    }
+    else{
+        if($_POST['medamt'] == 0){
+            $errors['amounterror'] = 'INVALID AMOUNT';
+        }
+        else {
+            $amount = $_POST['medamt'];
+        }   
+    }
+    if(empty($_POST['edate'])){
+        $errors['dateerror'] = 'Fill in a date <br />';
+    }
+    else{
+        $date = $_POST['edate'];
+        $current_time = new DateTime();
+        $input_date = new DateTime($date);
+        if ($input_date < $current_time) {
+            // The date is in the past
+            $errors['dateerror'] = "Please enter a future date";
+        }
+    }
+
+    if(array_filter($errors)){}
+    else{
+        $symptom = mysqli_real_escape_string($conn,$_POST['symptoms']);
+        $diagnosis = mysqli_real_escape_string($conn,$_POST['diagn']);
+        $date = mysqli_real_escape_string($conn,$_POST['edate']);
+        
+        $sqlsce = "INSERT INTO scenario(patient,doctor,symptoms,diagnosis) VALUES ($idpat,$iddoc,'$symptom','$diagnosis')";
+        if(mysqli_query($conn,$sqlsce)){
+            $last_id = mysqli_insert_id($conn);
+            $sqlall = "INSERT INTO allocation(patient,doctor,medicine,allocated,scenario,expected) VALUES ($idpat,$iddoc,$idmedicin,$amount,$last_id,'$date')";
+            if(mysqli_query($conn,$sqlall)){
+                $new = $available - $amount;
+                $sqlupd = "UPDATE medicine SET availableamt = $new WHERE medicine.id = $idmedicin";
+                if(mysqli_query($conn,$sqlupd)){
+                    header("location:history.php");
+                }else{
+                    echo 'query error: '.mysqli_error($conn);
+                }    
+
+            }else{
+                echo 'query error: '.mysqli_error($conn); 
+            }
+
+        } else{
+            echo 'query error: '.mysqli_error($conn); 
+        }
+
+    }
+
+
+
 }
 ?>
 
@@ -170,7 +139,7 @@ if(isset($_POST['submit'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Allocation</title>
+    <title>Allocation-Entry</title>
     <style>
         #allocate{
             border-bottom: 10px solid #111d13;
@@ -209,32 +178,32 @@ if(isset($_POST['submit'])){
     <div id="central">
     <form action="allocate.php" method="POST" style="display: flex; flex-direction: column; margin: 50px 20%;">
 
-        <label for="email" style="margin:100px,0;">Doctor name: </label>
-        <input disabled type="text" name="email" style="margin:100px,0;" value ="<?php echo htmlspecialchars($fname); ?>" >
-        <div class="errormessage" style="color:red; margin:100px,0;"><?php echo($errors['emal']);  ?></div>
+        <label for="doctor name" style="margin:100px,0;">Doctor name: </label>
+        <input disabled type="text" name="fnam" style="margin:100px,0;" value ="<?php echo htmlspecialchars($fname); ?>" >
 
-        <label for="medicine" style="margin:100px,0;">Patient email: </label>
-        <input type="input" name="patientemail" style="margin:100px,0;" value="<?php echo htmlspecialchars($patemail);?>">
+        <label for="patient email" style="margin:100px,0;">Patient email: </label>
+        <input type="input" name="patientemail" style="margin:100px,0;" value="<?php echo htmlspecialchars($patient_email);?>">
+        <div class="errormessage" style="color:red; margin:100px,0;"><?php echo($errors['patemail']);  ?></div>
 
-        <button name="findpat">find patient</button>
-        <div class="errormessage" style="color:red; margin:100px,0;"><?php echo($errors['pat']);  ?></div>
+        <label for="symptoms description" style="margin:100px,0;">Recorded symptoms: </label>
+        <input type="input" name="symptoms" style="margin:100px,0; height:150px;" value="<?php echo htmlspecialchars($symptom);?>">
+        <div class="errormessage" style="color:red; margin:100px,0;"><?php echo($errors['sympterror']);  ?></div>
 
-        <label for="patname" style="margin:100px,0;">patient name: </label>
-        <input type="text" name="patname" style="margin:100px,0;" value ="<?php echo htmlspecialchars($patname); ?>" >
+        <label for="diagnosis description" style="margin:100px,0;">Diagnosis: </label>
+        <input type="input" name="diagn" style="margin:100px,0;" value="<?php echo htmlspecialchars($diagnosis);?>">
+        <div class="errormessage" style="color:red; margin:100px,0;"><?php echo($errors['diagnosiserror']);  ?></div>
 
-        <label for="symptoms" style="margin:100px,0;">Recorded symptoms: </label>
-        <input type="input" name="symptom" style="margin:100px,0; height:150px;" value="<?php echo htmlspecialchars($sympt);?>">
+        <label for="medicine to allocate" style="margin:100px,0;">Medicine: </label>
+        <input type="input" name="medicine" style="margin:100px,0;" value="<?php echo htmlspecialchars($medicine_name);?>"> 
+        <div class="errormessage" style="color:red; margin:100px,0;"><?php echo($errors['mederror']);  ?></div>
 
-        <label for="diagnosis" style="margin:100px,0;">Diagnosis: </label>
-        <input type="input" name="diagn" style="margin:100px,0;" value="<?php echo htmlspecialchars($diag);?>">
+        <label for="medamt description" style="margin:100px,0;">Amount allocated: </label>
+        <input type="number" name="medamt" style="margin:100px,0;" value="<?php echo htmlspecialchars($amount);?>">
+        <div class="errormessage" style="color:red; margin:100px,0;"><?php echo($errors['amounterror']);  ?></div>
 
-        <label for="medicine" style="margin:100px,0;">Medicine: </label>
-        <input type="input" name="medicine" style="margin:100px,0;" value="<?php echo htmlspecialchars($medicin);?>"> 
-        <button name="find">find medicine</button>
-        
-        <label for="medtype" style="margin:100px,0;">Medicine Type: </label>
-        <input type="input" name="medtyp" style="margin:100px,0;" value="<?php echo htmlspecialchars($typmed);?>">
-        <div class="errormessage" style="color:red; margin:100px,0;"><?php echo($errors['medicin']);  ?></div>
+        <label for="expected date" style="margin:100px,0;">Expected finishing date: </label>
+        <input type="date" name="edate" style="margin:100px,0;" value="<?php echo htmlspecialchars($date);?>">
+        <div class="errormessage" style="color:red; margin:100px,0;"><?php echo($errors['dateerror']);  ?></div>
 
         <button name="submit">submit</button>
 
