@@ -37,8 +37,8 @@ include('doctoroverall.php');
                 <tr>
                     <th>Medicine Name</th>
                     <th>Medicine Type</th>
-                    <th>Medicine description<th>
-                    <th>Available Amount<th>                        
+                    <th>Medicine description</th>
+                    <th>Available Amount</th>                        
                 </tr>
                 <?php   
                     $sqlmed = 'SELECT name,type,availableamt FROM medicine';
@@ -72,6 +72,8 @@ include('doctoroverall.php');
                             </tr> 
                         </div>
                 <?php endforeach;
+                mysqli_free_result($resultmed);
+                mysqli_free_result($resulttype);
                  ?>
                 </table>
         

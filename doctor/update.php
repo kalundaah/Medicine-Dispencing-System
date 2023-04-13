@@ -11,6 +11,41 @@ foreach($data as $dat):
         $patid = $dat['id'];
 }
 endforeach;
+$pemail= $first = $last = $phone = $dob ='';
+$errors =array('email'=>'','na'=>'');
+if(isset($_POST['submit']))
+{
+    if(empty($_POST['patemail']))
+    {
+        $errors['email']="ENTER AN EMAIL ADDRESS";
+    }
+    else{
+        $pemail = $_POST['patemail'];
+        if(!filter_var($pemail,FILTER_VALIDATE_EMAIL)){
+            $error['email'] = 'email must be a valid email adress';
+        }
+    }
+    if(array_filter($errors)){
+
+    }
+    else{
+        $sqlpat = 'SELECT id,firstname,lastname,dob,email,phonenos FROM patient';
+        //make query and get result
+        $resultpat = mysqli_query($conn, $sqlpat);
+        //fetch the resulting rows
+        $datapat = mysqli_fetch_all($resultpat,MYSQLI_ASSOC);
+        foreach($datapat as $datpat):
+            if($pemail == $datpat['email'])
+            {
+                $first = $datpat['firstname'];
+                $last = $datpat['lastname'];
+                $dob = $datpat['dob'];
+                $phone = $datpat['phonenos'];
+                
+            }
+        endforeach;
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -31,11 +66,27 @@ endforeach;
         table{
             margin-top: 100px;
         }
+        #updat{
+            background-color: lightgreen;
+        }
     </style>
 </head>
 <body>
     <div id="central">
-        <h7> Your details as per your last visit.</h7>
+        <h7> Create/Find a patient's details.</h7>
+        <div id="all">
+                <a href="create.php" style="text-decoration: none; color:white;"><div class="allmenu" id="create">Create Patient</div></a>
+                <a href="update.php" style="text-decoration: none; color:white;"><div class="allmenu" id="updat">Update User</div></a>
+        </div>
+
+        <form action="update.php" method="POST" style="display: flex; flex-direction: column; margin: 50px 20%;">
+
+        <label for="patient email" style="margin:20px,0;">Patient email: </label>
+        <input type="text" name="patemail" value ="<?php echo htmlspecialchars($pemail); ?>">
+        <div class="errormessage" style="color:red; margin:20px,0;"><?php echo($errors['email']); ?></div>
+
+        <button name="submit" >submit</button>
+        
         <table>
                     
             <tr>
@@ -44,41 +95,16 @@ endforeach;
                 <th>Date of Birth</th>
                 <th>email</th>
                 <th>Phone Number</th>
-                <th>Height</th>
-                <th>Weight(Kgs)</th>
-                <th>Blood Pressure</th>
-                <th>Temperature</th>
-                <th>Heart Rate</th>
-                <th>Respiratory Rate</th>
             </tr>
-            <?php
-                $sqlpat = 'SELECT id,firstname,lastname,dob,email,phonenos,height,weight,bloodpressure,temperature,heartrate,respiratoryrate FROM patient';
-                //make query and get result
-                $resultpat = mysqli_query($conn, $sqlpat);
-                //fetch the resulting rows
-                $datapat = mysqli_fetch_all($resultpat,MYSQLI_ASSOC);
-                foreach($datapat as $dat2):
-            ?>
             <div>
                 <tr>
-
-                <?php if($patid == $dat2['id']){ ?>
-                    <td> <h2> <?php echo htmlspecialchars($dat2['firstname']); ?> </h2></td> 
-                    <td> <h2> <?php echo htmlspecialchars($dat2['lastname']); ?> </h2> </td>  
-                    <td> <h2> <?php echo htmlspecialchars($dat2['dob']); ?> </h2> </td>
-                    <td> <h2> <?php echo htmlspecialchars($dat2['email']); ?> </h2> </td>
-                    <td> <h2> <?php echo htmlspecialchars($dat2['phonenos']); ?> </h2> </td>
-                    <td> <h2> <?php echo htmlspecialchars($dat2['height']); ?> </h2> </td>
-                    <td> <h2> <?php echo htmlspecialchars($dat2['weight']); ?> </h2> </td>
-                    <td> <h2> <?php echo htmlspecialchars($dat2['bloodpressure']); ?> </h2> </td>
-                    <td> <h2> <?php echo htmlspecialchars($dat2['temperature']); ?> </h2> </td>
-                    <td> <h2> <?php echo htmlspecialchars($dat2['heartrate']); ?> </h2> </td>
-                    <td> <h2> <?php echo htmlspecialchars($dat2['respiratoryrate']); ?> </h2> </td>  
+                    <td> <h2> <?php echo htmlspecialchars($first); ?> </h2></td> 
+                    <td> <h2> <?php echo htmlspecialchars($last); ?> </h2> </td>  
+                    <td> <h2> <?php echo htmlspecialchars($dob); ?> </h2> </td>
+                    <td> <h2> <?php echo htmlspecialchars($pemail); ?> </h2> </td>
+                    <td> <h2> <?php echo htmlspecialchars($phone); ?> </h2> </td>  
                 </tr>
             </div> 
-            
-            <?php } endforeach;
-            ?>
         </table> 
     </div>
 <!-- //end of content -->

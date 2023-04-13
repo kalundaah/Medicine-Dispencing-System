@@ -44,15 +44,9 @@ endforeach;
                 <th>Date of Birth</th>
                 <th>email</th>
                 <th>Phone Number</th>
-                <th>Height</th>
-                <th>Weight(Kgs)</th>
-                <th>Blood Pressure</th>
-                <th>Temperature</th>
-                <th>Heart Rate</th>
-                <th>Respiratory Rate</th>
             </tr>
             <?php
-                $sqlpat = 'SELECT id,firstname,lastname,dob,email,phonenos,height,weight,bloodpressure,temperature,heartrate,respiratoryrate FROM patient';
+                $sqlpat = 'SELECT id,firstname,lastname,dob,email,phonenos FROM patient';
                 //make query and get result
                 $resultpat = mysqli_query($conn, $sqlpat);
                 //fetch the resulting rows
@@ -67,13 +61,7 @@ endforeach;
                     <td> <h2> <?php echo htmlspecialchars($dat2['lastname']); ?> </h2> </td>  
                     <td> <h2> <?php echo htmlspecialchars($dat2['dob']); ?> </h2> </td>
                     <td> <h2> <?php echo htmlspecialchars($dat2['email']); ?> </h2> </td>
-                    <td> <h2> <?php echo htmlspecialchars($dat2['phonenos']); ?> </h2> </td>
-                    <td> <h2> <?php echo htmlspecialchars($dat2['height']); ?> </h2> </td>
-                    <td> <h2> <?php echo htmlspecialchars($dat2['weight']); ?> </h2> </td>
-                    <td> <h2> <?php echo htmlspecialchars($dat2['bloodpressure']); ?> </h2> </td>
-                    <td> <h2> <?php echo htmlspecialchars($dat2['temperature']); ?> </h2> </td>
-                    <td> <h2> <?php echo htmlspecialchars($dat2['heartrate']); ?> </h2> </td>
-                    <td> <h2> <?php echo htmlspecialchars($dat2['respiratoryrate']); ?> </h2> </td>  
+                    <td> <h2> <?php echo htmlspecialchars($dat2['phonenos']); ?> </h2> </td> 
                 </tr>
             </div> 
             

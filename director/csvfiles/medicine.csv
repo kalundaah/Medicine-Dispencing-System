@@ -1,0 +1,42 @@
+0,1,2,3,4,5
+1,epipen,1,230,250,20
+2,Adrenalin,1,200,250,50
+3,Auvi-Q,1,250,250,0
+4,Penicillin,2,250,250,0
+5,Ciprofloxacin,2,250,250,0
+6,Azithromycin,2,250,250,0
+7,Amoxicillin,2,250,250,0
+8,Vancomycin,2,250,250,0
+9,Warfarin,3,250,250,0
+10,Heparin,3,250,250,0
+11,Dabigatran,3,250,250,0
+12,Rivaroxaban,3,250,250,0
+13,Apixaban,3,250,250,0
+14,Humulin,5,250,250,0
+15,Novolin,5,250,250,0
+16,Lantus,5,250,250,0
+17,Levemir,5,250,250,0
+18,Novolog,5,250,250,0
+19,Cyclophosphamide,6,250,250,0
+20,Cisplatin,6,250,250,0
+21,Doxorubicin,6,250,250,0
+22,Paclitaxel,6,250,250,0
+23,Methotrexate,6,250,250,0
+24,Naloxone,7,250,250,0
+25,Evzio,7,250,250,0
+26,Zynox,7,250,250,0
+27,Acyclovir,8,250,250,0
+28,Oseltamivir,8,250,250,0
+29,Zidovudine,8,250,250,0
+30,Sofosbuvir,8,250,250,0
+31,Ritonavir,8,250,250,0
+32,Oxycodone,9,250,250,0
+33,Fentanyl,9,250,250,0
+34,Hydrocodone,9,210,250,40
+35,Codeine,9,250,250,0
+36,Morphine,9,240,250,10
+37,Immune Globulin Intravenous,4,250,250,0
+38,Rho(D) Immune Globulin,4,250,250,0
+39,Hepatitis B Immune Globulin,4,250,250,0
+40,Cytomegalovirus Immune Globulin,4,250,250,0
+41,Rabies Immune Globulin,4,250,250,0

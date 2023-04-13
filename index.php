@@ -21,6 +21,7 @@ if(isset($_POST['submit'])){
     }
     else{
          $pass = $_POST['password'];
+         
          $sql = 'SELECT firstname,lastname,email,password FROM patient';
          $sql2 = 'SELECT firstname,lastname,email,password FROM doctor';
          //make query and get result
