@@ -1,3 +1,10 @@
 Created a index.php for the intialization of the website
 Created a database design for the system
 Establish connection to database
+create a hospital-esque frontend
+created new table doctor type that defines a normal doctor to the hospital director
+created login screen and directs the server to the respective allocated home page
+Login data saved to txt file and used to access your details.
+now modify the home page (Soon to give patient the amount of medicine he/she has and recommend if one does not meet a certain threshold)
+Created order page where patient can request for medicine since his allocation is nearing to end (The patient will be soon restricted to order for medicine that has not met a certain threshold for ordering)
+To now showcase any Order or treatment history on a specific patient in history page
