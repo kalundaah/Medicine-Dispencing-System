@@ -113,7 +113,7 @@ if(isset($_POST['submit']))
             margin-top: 100px;
         }
         #create{
-            background-color: lightgreen;
+            background-color: #e63946;
         }
         #central{
             overflow:auto;
@@ -133,7 +133,7 @@ if(isset($_POST['submit']))
         <h7> Create/Change a patient's details.</h7>
         <div id="all">
                 <a href="create.php" style="text-decoration: none; color:white;"><div class="allmenu" id="create">Create Patient</div></a>
-                <a href="update.php" style="text-decoration: none; color:white;"><div class="allmenu" id="updat">Update User</div></a>
+                <a href="update.php" style="text-decoration: none; color:white;"><div class="allmenu" id="updat">Find User</div></a>
         </div>
         <div class="errormessage" style="color:red; margin:100px,0;"><?php echo($suc);  ?></div>
         <!-- Form for creating new patient -->

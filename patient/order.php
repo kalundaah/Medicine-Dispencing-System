@@ -3,6 +3,13 @@ include('data.php');
 //establish connection to database
 include('dbconnect.php');
 include('patientoverall.php');
+foreach($data as $dat):
+    if($email == $dat['email']){
+        $fname = $dat['firstname'];
+        $lname = $dat['lastname'];
+        $idpat = $dat['id'];
+}
+endforeach;
 
 $errors = array('emal' => '','medicin' => '','medtype'=> '');
 $emai = $medicin = $typmed= '';
@@ -116,32 +123,76 @@ if(isset($_POST['submit'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Page</title>
+    <title>Patient Data</title>
     <style>
         #order{
             border-bottom: 10px solid #111d13;
         }
+        td,tr{
+            border: 1px solid black;
+        }
+        table{
+            width:100%;
+            border-collapse: collapse;
+        }
+        #tab{
+            overflow:auto;
+            height:90vh;
+        }
+
     </style>
 </head>
 <body>
     <div id="central">
-        <form action="order.php" method="POST" style="display: flex; flex-direction: column; margin: 50px 20%;">
+        <div id="tab">
+            <table>
+                    <tr>
+                        <th>medicine</th>
+                        <th>Allocated Time</th>
+                        <th>Expected time for refill</th>   
+                    </tr>
+                    <?php   
+                        $sqlhis = 'SELECT patient,medicine,time,expected FROM allocation' ;
+                        $sqlmed = 'SELECT id,name FROM medicine';
 
-        <label for="email" style="margin:20px,0;">Your email: </label>
-        <input disabled type="text" name="email" value ="<?php echo htmlspecialchars($email); ?>" >
-        <div class="errormessage" style="color:red; margin:20px,0;"><?php echo($errors['emal']);  ?></div>
+                        //make query and get result
+                        $resulthis = mysqli_query($conn, $sqlhis);
+                        $resultmed = mysqli_query($conn, $sqlmed);
 
-        <label for="medicine" style="margin:20px,0;">Medicine: </label>
-        <input type="input" name="medicine" value="<?php echo htmlspecialchars($medicin);?>"> 
-        <button name="find">find</button>
+                        //fetch the resulting rows
+                        $datahis = mysqli_fetch_all($resulthis,MYSQLI_ASSOC); //past orders
+                        $datamed = mysqli_fetch_all($resultmed,MYSQLI_ASSOC); // medcine data
 
-        <label for="medtype" style="margin:20px,0;">Medicine Type: </label>
-        <input type="input" disabled name="medicinetype" value="<?php echo htmlspecialchars($typmed);?>">
-        <div class="errormessage" style="color:red; margin:20px,0;"><?php echo($errors['medicin']);  ?></div>
+                        if(empty($datahis)){
+                            $empty = 'N/A'; ?>
+                            <div>
+                                <tr> 
+                                    <td> <h6> <?php echo htmlspecialchars($empty); ?> </h6> </td>  
+                                    <td> <h6> <?php echo htmlspecialchars($empty); ?> </h6> </td>
+                                    <td> <h6> <?php echo htmlspecialchars($empty); ?> </h6> </td>    
+                                </tr> 
+                            </div>
 
-        <button name="submit">submit</button>
+                        <?php }
 
-        </form>
+                        foreach($datahis as $dat): ?>
+                            <div>
+                                <tr>
+                                    <td> <h6> <?php 
+                                    foreach($datamed as $dat2): 
+                                        if($dat2['id'] == $dat['medicine'])
+                                        {
+                                            echo htmlspecialchars($dat2['name']);  
+                                        } endforeach; ?> </h6> </td>
+                                    <td> <h6> <?php echo htmlspecialchars($dat['time']); ?> </h6> </td>
+                                    <td> <h6> <?php echo htmlspecialchars($dat['expected']); ?> </h6> </td>
+                                </tr> 
+                            </div>
+                    <?php endforeach;
+                    ?>
+                    </table>
+        </div>
+
     </div>
 <!-- //end of content -->
 </div>

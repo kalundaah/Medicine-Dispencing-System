@@ -57,7 +57,7 @@ if(isset($_POST['submit']))
     <title>Profile</title>
     <style>
         #update{
-            border-bottom: 10px solid #111d13;
+            border-bottom: 10px solid #e63946;
         }
         th,td{
             border: 1px solid black;
@@ -67,7 +67,7 @@ if(isset($_POST['submit']))
             margin-top: 100px;
         }
         #updat{
-            background-color: lightgreen;
+            background-color: #e63946;
         }
     </style>
 </head>
@@ -76,7 +76,7 @@ if(isset($_POST['submit']))
         <h7> Create/Find a patient's details.</h7>
         <div id="all">
                 <a href="create.php" style="text-decoration: none; color:white;"><div class="allmenu" id="create">Create Patient</div></a>
-                <a href="update.php" style="text-decoration: none; color:white;"><div class="allmenu" id="updat">Update User</div></a>
+                <a href="update.php" style="text-decoration: none; color:white;"><div class="allmenu" id="updat">Find User</div></a>
         </div>
 
         <form action="update.php" method="POST" style="display: flex; flex-direction: column; margin: 50px 20%;">
@@ -85,7 +85,7 @@ if(isset($_POST['submit']))
         <input type="text" name="patemail" value ="<?php echo htmlspecialchars($pemail); ?>">
         <div class="errormessage" style="color:red; margin:20px,0;"><?php echo($errors['email']); ?></div>
 
-        <button name="submit" >submit</button>
+        <button style="margin:10px;" name="submit" >submit</button>
         
         <table>
                     

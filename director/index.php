@@ -1,6 +1,3 @@
-<?php
-
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,13 +13,13 @@
             font-family: 'Open Sans', sans-serif;          
             margin: 0;
             text-shadow: 0px 0px 5px black;
-            background-color: #d8f3dc;
+            background-color: #ffffff;
             font-size:medium;
         }
         #navpane{
             display:flex;
             flex-direction: row;
-            background-color: #081c15;
+            background-color: #000000;
             justify-content: space-evenly;
             color: antiquewhite;
             text-shadow: 0 0 3px black;
@@ -36,7 +33,6 @@
         #sidepane{
             display:flex;
             flex-direction: column;
-            background-color: #081c15;
             justify-content: space-evenly;
             height:70vh;
             color:antiquewhite;
@@ -46,20 +42,20 @@
         }
         .elements{
            height:10vh;
-           
         }
         .side-elements{
            display:flex;
            position:sticky;
            height:10vh;
            margin: 0 auto;
+           border: 10px solid white;
            border-bottom: 10px solid white;
            justify-content: center;
            text-align: center;
            border:2px solid white;
            border-radius: 12px;
            padding: 5px;
-           background-color: #081c15;
+           background-color: #fca311;
         }
         h5:hover{
             transform:scale(1.5);
@@ -89,13 +85,23 @@
             width: 100%;
             color: black;
             text-shadow: 0 0 1px black;
-
+            /* max-height: 100vh;
+            overflow: auto; */
         }
         h3{
             color:red;
         }
-        .icons:hover{
-            transform:scale(1.5);
+        .allmenu{
+            background-color: #457b9d;
+            border:10px solid #a8dadc;
+            height:50px;
+            width:70px;
+            
+        }
+        #all{
+            display:flex;
+            flex-direction: row;
+            justify-content: space-around;
         }
         button {
             background-color: #e63946; /* Green */
@@ -121,29 +127,29 @@
             border-radius: 25px;
             padding: 20px;
         }
-        table{
-            border-collapse: collapse;
-        }
+
     </style>
     <script src="https://kit.fontawesome.com/57a72e588d.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div id="navpane">
+        <div><h5 id ="doctor-name">Admin </h5></div>
         <a href="home.php" style="text-decoration: none; color:white;"><div class="elements" id="navhome"><h5>Home</h5></div></a>
-        <a href="order.php" style="text-decoration: none; color:white;"><div class="elements" id="navorder"><h5>Data</h5></div></a>
-        <a href="history.php" style="text-decoration: none; color:white;"><div class="elements" id="navhistory"><h5>History</h5></div></a>
-        <a href="profile.php" style="text-decoration: none; color:white;"><div class="elements" id="navprofile"><h5>Profile</h5></div></a>
+        <a href="stock.php" style="text-decoration: none; color:white;"><div class="elements" id="navorder"><h5>Stock</h5></div></a>
+        <a href="allocate.php" style="text-decoration: none; color:white;"><div class="elements" id="navhistory"><h5>Allocate</h5></div></a>
+        <a href="update.php" style="text-decoration: none; color:white;"><div class="elements" id="navprofile"><h5>Patient</h5></div></a>
         <a href="/mda/index.php" style="text-decoration: none; color:white;"><div class="elements" ><h5>Sign out</h5></div></a>
-
-        
     </div>
     <div id="con">
         <div id="enlarged">
             <div id="sidepane">
                 <a href="home.php" style="text-decoration: none; color:white;"><div class="side-elements" id="home"><div class="icons"><i class="fa-solid fa-home"></i></div><div class="text"><h5>Home</h5></div></div></a>
-                <a href="order.php" style="text-decoration: none; color:white;"><div class="side-elements" id="order"><div class="icons"><i class="fa-solid fa-magnifying-glass"></i></div><div class="text"><h5>Data</h5></div></div></a>
-                <a href="history.php" style="text-decoration: none; color:white;"><div class="side-elements" id="history"><div class="icons"><i class="fa-solid fa-book"></i></div><div class="text"><h5>History</h5></div></div></a>
-                <a href="profile.php" style="text-decoration: none; color:white;"><div class="side-elements" id="profile"><div class="icons"><i class="fa-solid fa-user"></i></div><div class="text"><h5>Profile</h5></div></div></a>
+                <a href="stock.php" style="text-decoration: none; color:white;"><div class="side-elements" id="stock"><div class="icons"><i class="fa-solid fa-warehouse"></i></div><div class="text"><h5>Stock</h5></div></div></a>
+                <a href="allocate.php" style="text-decoration: none; color:white;"><div class="side-elements" id="allocate"><div class="icons"><i class="fa-solid fa-handshake"></i></div><div class="text"><h5>Allocate</h5></div></div></a>
+                <a href="update.php" style="text-decoration: none; color:white;"><div class="side-elements" id="update"><div class="icons"><i class="fa-solid fa-pen"></i></div><div class="text"><h5>Patient</h5></div></div></a>
             </div>
         </div>
-    
+        <div id="central"><p style="font-size:5vw"> Welcome Admin</p></div>
+        
+    </div> 
+</body>

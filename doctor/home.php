@@ -18,12 +18,12 @@ include('doctoroverall.php');
     <title>Home Page</title>
     <style>
         #home{
-            border-bottom: 10px solid #111d13;
+            border-bottom: 10px solid #e63946;
         }
     </style>
 </head>
 <body>
-    <div id="central"> <p> Welcome <?php echo $fname."<br>"; ?></p> </div>
+    <div id="central"> <p style="font-size:5vw"> Welcome <?php echo $fname."<br>"; ?></p> </div> 
 <!-- //end of content -->
 </div>
     

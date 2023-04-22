@@ -1,5 +1,0 @@
-<?php
-    $email = '';
-    $fname = '';
-    $sname = '';
-?>

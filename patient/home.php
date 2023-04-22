@@ -23,7 +23,7 @@ include('patientoverall.php');
     </style>
 </head>
 <body>
-    <div id="central"> <p> Welcome <?php echo $fname."<br>"; ?></p> </div>
+    <div id="central"> <p style="font-size:5vw"> Welcome <?php echo $fname."<br>"; ?></p> </div>
 <!-- //end of content -->
 </div>
     

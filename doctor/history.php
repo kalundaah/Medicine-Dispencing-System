@@ -19,7 +19,7 @@ endforeach;
     <title>Allocation-History</title>
     <style>
         #allocate{
-            border-bottom: 10px solid #111d13;
+            border-bottom: 10px solid #e63946;
         }
         #historyorg{
             display:flex;
@@ -49,7 +49,7 @@ endforeach;
             border: 4px solid white;
         }
         #history{
-            background-color: lightgreen;
+            background-color: #e63946;
         }
         #central{
             overflow:auto;

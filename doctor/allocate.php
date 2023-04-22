@@ -9,7 +9,7 @@ foreach($data as $dat):
         $iddoc = $dat['id'];
 }
 endforeach;
-$errors = array('patemail' => '','sympterror' => '','diagnosiserror' => '', 'mederror' => '','amounterror' => '','dateerror'=>'');
+$errors = array('patemail' => '','sympterror' => '','diagnosiserror' => '', 'mederror' => '','amounterror' => '','dateerror'=>'','lesserror' => '');
 $patient_email = $symptom = $diagnosis = $medicine_name = $message = '';
 $date = '0000-00-00';
 
@@ -19,10 +19,14 @@ $idmedicine = 0;
 $available = 0;
 $new = 0;
 $prev = 0;
+$cost = 0;
+$rev = 0;
+$allcost = 0;
+$tot = 0;
 
 if(isset($_POST['submit'])){
     if(empty($_POST['patientemail'])){
-        $errors['patemal'] = 'An email is required <br />';
+        $errors['patemail'] = 'An email is required <br />';
     }
     else{
         $patient_email = $_POST['patientemail'];
@@ -62,7 +66,7 @@ if(isset($_POST['submit'])){
     }
     else{
         $medicine_name = $_POST['medicine'];
-        $sqlmed = 'SELECT id,name,availableamt,totalsold FROM medicine';
+        $sqlmed = 'SELECT id,name,availableamt,totalsold,cost,revenue FROM medicine';
         $result2 = mysqli_query($conn,$sqlmed);
         $datamedicine = mysqli_fetch_all($result2,MYSQLI_ASSOC);
         foreach($datamedicine as $datmed):
@@ -70,9 +74,18 @@ if(isset($_POST['submit'])){
                 $idmedicin = $datmed['id'];
                 $available = $datmed['availableamt'];
                 $prev = $datmed['totalsold'];
+                $cost = $datmed['cost'];
+                $rev = $datmed['revenue'];
 
         }
         endforeach;
+        if($available < $_POST['medamt'])
+        {
+            $errors['lesserror'] = 'The amount will not be enough for the allocation. Available amount is '.$available;
+        }
+        elseif(empty($available)){
+            $errors['lesserror'] = 'The medicine is currently unavailable ';
+        }
         if($idmedicin == 0){
             $errors['mederror'] = 'INCORRECT EMAIL';
         }
@@ -109,9 +122,10 @@ if(isset($_POST['submit'])){
         $date = mysqli_real_escape_string($conn,$_POST['edate']);
         
         $sqlsce = "INSERT INTO scenario(patient,doctor,symptoms,diagnosis) VALUES ($idpat,$iddoc,'$symptom','$diagnosis')";
+        $allcost = $cost * $amount;
         if(mysqli_query($conn,$sqlsce)){
             $last_id = mysqli_insert_id($conn);
-            $sqlall = "INSERT INTO allocation(patient,doctor,medicine,allocated,scenario,expected) VALUES ($idpat,$iddoc,$idmedicin,$amount,$last_id,'$date')";
+            $sqlall = "INSERT INTO allocation(patient,doctor,medicine,allocated,scenario,expected,cost) VALUES ($idpat,$iddoc,$idmedicin,$amount,$last_id,'$date',$allcost)";
             if(mysqli_query($conn,$sqlall)){
                 $new = $available - $amount;
                 $prev = $prev + $amount;
@@ -119,7 +133,20 @@ if(isset($_POST['submit'])){
                 if(mysqli_query($conn,$sqlupd)){
                     $sqltot = "UPDATE medicine SET totalsold = $prev WHERE medicine.id = $idmedicin";
                     if(mysqli_query($conn,$sqltot)){
-                        $message = 'Medicine Allocated';
+                        if($rev == 0){
+                            $tot = $allcost;
+                        }
+                        else{
+                            $tot = $allcost + $rev;
+                        }
+                        $sqlrev = "UPDATE medicine SET revenue = $tot WHERE medicine.id = $idmedicin";
+                        if(mysqli_query($conn,$sqlrev)){
+                            $message = 'Medicine Allocated';
+                        }
+                        else{
+                            echo 'query error: '.mysqli_error($conn);
+                        }
+                       
                     }else{
                         echo 'query error: '.mysqli_error($conn);
                     } 
@@ -151,7 +178,7 @@ if(isset($_POST['submit'])){
     <title>Allocation-Entry</title>
     <style>
         #allocate{
-            border-bottom: 10px solid #111d13;
+            border-bottom: 10px solid #e63946;
         }
         #historyorg{
             display:flex;
@@ -177,11 +204,9 @@ if(isset($_POST['submit'])){
             color:whitesmoke;
             background-image: linear-gradient(#606c38,#283618);
         }
-        td,tr{
-            border: 1px solid white;
-        }
+
         #entry{
-            background-color: lightgreen;
+            background-color: #e63946;
         }
         #confirmation{
             margin-left: 50vh;
@@ -190,6 +215,7 @@ if(isset($_POST['submit'])){
             font-size: larger;
             color: red;
         }
+        
 
     </style>
 </head>
@@ -202,34 +228,52 @@ if(isset($_POST['submit'])){
         </div>
         <h6 id = "confirmation"><?php echo htmlspecialchars($message)?></h6> 
     <form action="allocate.php" method="POST" style="display: flex; flex-direction: column; margin: 50px 20%;">
-
-        <label for="doctor name" style="margin:100px,0;">Doctor name: </label>
-        <input disabled type="text" name="fnam" style="margin:100px,0;" value ="<?php echo htmlspecialchars($fname); ?>" >
-
-        <label for="patient email" style="margin:100px,0;">Patient email: </label>
-        <input type="input" name="patientemail" style="margin:100px,0;" value="<?php echo htmlspecialchars($patient_email);?>">
-        <div class="errormessage" style="color:red; margin:100px,0;"><?php echo($errors['patemail']);  ?></div>
-
-        <label for="symptoms description" style="margin:100px,0;">Recorded symptoms: </label>
-        <input type="input" name="symptoms" style="margin:100px,0; height:150px;" value="<?php echo htmlspecialchars($symptom);?>">
-        <div class="errormessage" style="color:red; margin:100px,0;"><?php echo($errors['sympterror']);  ?></div>
-
-        <label for="diagnosis description" style="margin:100px,0;">Diagnosis: </label>
-        <input type="input" name="diagn" style="margin:100px,0;" value="<?php echo htmlspecialchars($diagnosis);?>">
-        <div class="errormessage" style="color:red; margin:100px,0;"><?php echo($errors['diagnosiserror']);  ?></div>
-
-        <label for="medicine to allocate" style="margin:100px,0;">Medicine: </label>
-        <input type="input" name="medicine" style="margin:100px,0;" value="<?php echo htmlspecialchars($medicine_name);?>"> 
-        <div class="errormessage" style="color:red; margin:100px,0;"><?php echo($errors['mederror']);  ?></div>
-
-        <label for="medamt description" style="margin:100px,0;">Amount allocated: </label>
-        <input type="number" name="medamt" style="margin:100px,0;" value="<?php echo htmlspecialchars($amount);?>">
-        <div class="errormessage" style="color:red; margin:100px,0;"><?php echo($errors['amounterror']);  ?></div>
-
-        <label for="expected date" style="margin:100px,0;">Expected finishing date: </label>
-        <input type="date" name="edate" style="margin:100px,0;" value="<?php echo htmlspecialchars($date);?>">
-        <div class="errormessage" style="color:red; margin:100px,0;"><?php echo($errors['dateerror']);  ?></div>
-
+        <table>
+            <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>                         
+            </tr>
+            <div>
+                <tr>
+                    <td> <label for="doctor name" style="margin:100px,0;">Doctor name: </label>  </td>
+                    <td> <input disabled type="text" name="fnam" style="margin:100px,0;width:350px;border:1px solid black; border-radius: 25px;padding: 20px;" value ="<?php echo htmlspecialchars($fname); ?>" >  </td>                             
+                    <td> <div class="errormessage" style="color:red; margin:100px,0;"><?php echo('');  ?></div> </td>                               
+                </tr>
+                <tr>
+                    <td><label for="patient email" style="margin:100px,0;">Patient email: </label></td>
+                    <td><input type="input" name="patientemail" style="margin:100px,0;width:350px;border:1px solid black; border-radius: 25px;padding: 20px;" value="<?php echo htmlspecialchars($patient_email);?>"></td>
+                    <td><div class="errormessage" style="color:red; margin:100px,0;"><?php echo($errors['patemail']);  ?></div></td>
+                </tr>
+                <tr>
+                    <td><label for="symptoms description" style="margin:100px,0;">Recorded symptoms: </label></td>
+                    <td><input type="input" name="symptoms" style="margin:100px,0; width:350px;border:1px solid black; border-radius: 25px;padding: 20px;" value="<?php echo htmlspecialchars($symptom);?>"></td>
+                    <td> <div class="errormessage" style="color:red; margin:100px,0;"><?php echo($errors['sympterror']);  ?></div></td>
+                </tr>
+                <tr>
+                    <td><label for="diagnosis description" style="margin:100px,0;">Diagnosis: </label></td>
+                    <td> <input type="input" name="diagn" style="margin:100px,0;width:350px;border:1px solid black; border-radius: 25px;padding: 20px;" value="<?php echo htmlspecialchars($diagnosis);?>"></td>
+                    <td><div class="errormessage" style="color:red; margin:100px,0;"><?php echo($errors['diagnosiserror']);  ?></div></td>
+                </tr>
+                <tr>
+                    <td><label for="medicine to allocate" style="margin:100px,0;">Medicine: </label></td>
+                    <td> <input type="input" name="medicine" style="margin:100px,0;width:350px;border:1px solid black; border-radius: 25px;padding: 20px;" value="<?php echo htmlspecialchars($medicine_name);?>"> </td>
+                    <td><div class="errormessage" style="color:red; margin:100px,0;"><?php echo($errors['mederror']);  ?></div></td>
+                </tr>
+                <tr>
+                    <td><label for="medamt description" style="margin:100px,0;">Amount allocated: </label></td>
+                    <td><input type="number" name="medamt" style="margin:100px,0;width:350px;border:1px solid black; border-radius: 25px;padding: 20px;" value="<?php echo htmlspecialchars($amount);?>"></td>
+                    <td><div class="errormessage" style="color:red; margin:100px,0;"><?php echo($errors['amounterror']);  ?></div>
+                        <div class="errormessage" style="color:red; margin:100px,0;"><?php echo($errors['lesserror']);  ?></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="expected date" style="margin:100px,0;">Expected finishing date: </label></td>
+                    <td><input type="date" name="edate" style="margin:100px,0;width:350px;border:1px solid black; border-radius: 25px;padding: 20px;" value="<?php echo htmlspecialchars($date);?>"></td>
+                    <td><div class="errormessage" style="color:red; margin:100px,0;"><?php echo($errors['dateerror']);  ?></div></td>
+                </tr>
+            </div>
+        </table>
         <button name="submit">submit</button>
 
     </form>
