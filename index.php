@@ -16,7 +16,7 @@ if(isset($_POST['submit'])){
         {
             //proceed
             if($_POST['password'] == 0000){
-                header("location:director/index.php");
+                header("location:director/home.php");
             }
         }
         elseif(!filter_var($emai,FILTER_VALIDATE_EMAIL)){

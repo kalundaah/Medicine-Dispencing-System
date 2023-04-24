@@ -135,21 +135,20 @@
     <div id="navpane">
         <div><h5 id ="doctor-name">Admin </h5></div>
         <a href="home.php" style="text-decoration: none; color:white;"><div class="elements" id="navhome"><h5>Home</h5></div></a>
-        <a href="stock.php" style="text-decoration: none; color:white;"><div class="elements" id="navorder"><h5>Stock</h5></div></a>
-        <a href="allocate.php" style="text-decoration: none; color:white;"><div class="elements" id="navhistory"><h5>Allocate</h5></div></a>
-        <a href="update.php" style="text-decoration: none; color:white;"><div class="elements" id="navprofile"><h5>Patient</h5></div></a>
+        <a href="medicine.php" style="text-decoration: none; color:white;"><div class="elements" id="navorder"><h5>Medicine</h5></div></a>
+        <a href="patients.php" style="text-decoration: none; color:white;"><div class="elements" id="navhistory"><h5>Patient</h5></div></a>
+        <a href="reports.php" style="text-decoration: none; color:white;"><div class="elements" id="navprofile"><h5>Reports</h5></div></a>
         <a href="/mda/index.php" style="text-decoration: none; color:white;"><div class="elements" ><h5>Sign out</h5></div></a>
     </div>
     <div id="con">
         <div id="enlarged">
             <div id="sidepane">
                 <a href="home.php" style="text-decoration: none; color:white;"><div class="side-elements" id="home"><div class="icons"><i class="fa-solid fa-home"></i></div><div class="text"><h5>Home</h5></div></div></a>
-                <a href="stock.php" style="text-decoration: none; color:white;"><div class="side-elements" id="stock"><div class="icons"><i class="fa-solid fa-warehouse"></i></div><div class="text"><h5>Stock</h5></div></div></a>
-                <a href="allocate.php" style="text-decoration: none; color:white;"><div class="side-elements" id="allocate"><div class="icons"><i class="fa-solid fa-handshake"></i></div><div class="text"><h5>Allocate</h5></div></div></a>
-                <a href="update.php" style="text-decoration: none; color:white;"><div class="side-elements" id="update"><div class="icons"><i class="fa-solid fa-pen"></i></div><div class="text"><h5>Patient</h5></div></div></a>
+                <a href="medicine.php" style="text-decoration: none; color:white;"><div class="side-elements" id="stock"><div class="icons"><i class="fa-solid fa-warehouse"></i></div><div class="text"><h5>Medicine</h5></div></div></a>
+                <a href="patients.php" style="text-decoration: none; color:white;"><div class="side-elements" id="allocate"><div class="icons"><i class="fa-solid fa-handshake"></i></div><div class="text"><h5>Patient</h5></div></div></a>
+                <a href="reports.php" style="text-decoration: none; color:white;"><div class="side-elements" id="update"><div class="icons"><i class="fa-solid fa-pen"></i></div><div class="text"><h5>Reports</h5></div></div></a>
             </div>
         </div>
-        <div id="central"><p style="font-size:5vw"> Welcome Admin</p></div>
         
-    </div> 
-</body>
+        
+

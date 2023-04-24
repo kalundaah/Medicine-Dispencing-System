@@ -1,6 +1,6 @@
 CREATE TABLE `mda`.`allocation` (`id` INT NOT NULL AUTO_INCREMENT , `doctor` INT NOT NULL , `patient` INT NOT NULL , `medicine` INT NOT NULL , `scenario` INT NOT NULL , `allocated` INT NOT NULL , `cost` INT NOT NULL , `expected` DATE NOT NULL , `time` TIMESTAMP NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
 
-CREATE TABLE `mda`.`doctor` (`id` INT NOT NULL AUTO_INCREMENT , `firstname` INT NOT NULL , `lastname` INT NOT NULL , `phonenos` VARCHAR(255) NOT NULL , `age` INT NOT NULL , `staffid` VARCHAR(255) NOT NULL , `email` VARCHAR(255) NOT NULL , `password` VARCHAR(255) NOT NULL , `date_added` TIMESTAMP NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+CREATE TABLE `mda`.`doctor` (`id` INT NOT NULL AUTO_INCREMENT , `firstname` VARCHAR(255) NOT NULL , `lastname` VARCHAR(255) NOT NULL , `phonenos` VARCHAR(255) NOT NULL , `age` INT NOT NULL , `staffid` VARCHAR(255) NOT NULL , `email` VARCHAR(255) NOT NULL , `password` VARCHAR(255) NOT NULL , `date_added` TIMESTAMP NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
 
 CREATE TABLE `mda`.`medicine` (`id` INT NOT NULL AUTO_INCREMENT , `name` VARCHAR(255) NOT NULL , `type` INT NOT NULL , `cost` INT NOT NULL , `availableamt` INT NOT NULL , `initrestock` INT NOT NULL , `totalsold` INT NOT NULL , `revenue` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
 

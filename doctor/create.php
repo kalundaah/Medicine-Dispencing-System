@@ -82,9 +82,11 @@ if(isset($_POST['submit']))
         $pph = mysqli_real_escape_string($conn,$_POST['pph']);
         $dob = mysqli_real_escape_string($conn,$_POST['dob']);
 
-        $sql = "INSERT INTO patient(firstname,lastname,dob,email,password,phonenos) VALUES ('$fname','$lname','$dob','$pemail','$pp','pph')";
+        $sql = "INSERT INTO patient(firstname,lastname,dob,email,password,phonenos) VALUES ('$fname','$lname','$dob','$pemail','$pp','$pph')";
         if(mysqli_query($conn,$sql)){
-            $succ = 'PATIENT CREATED SUCCESSFULLY';
+            $suc = 'PATIENT CREATED SUCCESSFULLY';
+            $fname =  $lname = $pemail = $pp = $cp = $pph = $dob = '';
+
         } else{
             echo 'query error: '.mysqli_error($conn);
         }
@@ -168,7 +170,7 @@ if(isset($_POST['submit']))
         <div class="errormessage" style="color:red; margin:100px,0;"><?php echo($errors['phone']);  ?></div>
 
         <button name="submit">submit</button>
-        <div class="errormessage" style="color:red; margin:100px,0;"><?php echo($suc);  ?></div>
+        
     </div>
 <!-- //end of content -->
 </div>
