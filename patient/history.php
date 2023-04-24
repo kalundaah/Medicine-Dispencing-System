@@ -54,29 +54,19 @@ endforeach;
                      <th>Expected time to end</th>
                 </tr>
                 <?php  
-                $sqlhis = 'SELECT patient,medicine,time_ordered FROM orders WHERE patient = '.$idpat ;
+                
                 $sqlmed = 'SELECT id,name FROM medicine';
                 $sqldoc = 'SELECT id,firstname FROM doctor';
 
                 //make query and get result
-                $resulthis = mysqli_query($conn, $sqlhis);
+               
                 $resultmed = mysqli_query($conn, $sqlmed);
                 $resultdoc = mysqli_query($conn, $sqldoc);
 
                 //fetch the resulting rows
-                $datahis = mysqli_fetch_all($resulthis,MYSQLI_ASSOC); //past orders
+               
                 $datamed = mysqli_fetch_all($resultmed,MYSQLI_ASSOC); // medcine data
                 $datadoc = mysqli_fetch_all($resultdoc,MYSQLI_ASSOC); //
-                if(empty($datahis)){
-                    $empty = 'N/A'; ?>
-                    <div>
-                        <tr>
-                            <td> <h6> <?php echo htmlspecialchars($empty); ?> </h6></td> 
-                            <td> <h6> <?php echo htmlspecialchars($empty); ?> </h6> </td>  
-                            <td> <h6> <?php echo htmlspecialchars($empty); ?> </h6> </td>  
-                        </tr> 
-                    </div>
-                <?php } 
 
                     $sqlall = 'SELECT patient,doctor,medicine,allocated,time,expected FROM allocation WHERE patient = '.$idpat;
                     //make query and get result
