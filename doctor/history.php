@@ -57,10 +57,10 @@ endforeach;
         }
         table{
             margin: 50px 20%;
-            border: 2px solid black;
+            border: 2px solid #5390d9;
         }
-        td,th{
-            border: 2px solid black;
+        tr,td,th{
+            border: 2px solid #5390d9;
 
         }
 

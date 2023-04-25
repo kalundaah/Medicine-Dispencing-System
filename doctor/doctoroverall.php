@@ -130,7 +130,9 @@
             border-radius: 25px;
             padding: 20px;
         }
-
+        table{
+            border-collapse: collapse;
+        }
     </style>
     <script src="https://kit.fontawesome.com/57a72e588d.js" crossorigin="anonymous"></script>
 </head>

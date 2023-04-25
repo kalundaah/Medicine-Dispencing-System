@@ -15,7 +15,7 @@ $date = '0000-00-00';
 
 $amount = 0;
 $idpat = 0;
-$idmedicine = 0;
+$idmedicin = 0;
 $available = 0;
 $new = 0;
 $prev = 0;
@@ -23,6 +23,15 @@ $cost = 0;
 $rev = 0;
 $allcost = 0;
 $tot = 0;
+$sqlmed = 'SELECT name,type,availableamt FROM medicine';
+$sqltype = 'SELECT id,type FROM medicinetype';
+//make query and get result
+$resultmed = mysqli_query($conn, $sqlmed);
+$resulttype = mysqli_query($conn, $sqltype);
+
+//fetch the resulting rows
+$datamed = mysqli_fetch_all($resultmed,MYSQLI_ASSOC); // medicine data
+$datatype = mysqli_fetch_all($resulttype,MYSQLI_ASSOC); //medicine tyoe data
 
 if(isset($_POST['submit'])){
     if(empty($_POST['patientemail'])){
@@ -141,6 +150,19 @@ if(isset($_POST['submit'])){
                         }
                         $sqlrev = "UPDATE medicine SET revenue = $tot WHERE medicine.id = $idmedicin";
                         if(mysqli_query($conn,$sqlrev)){
+                            $amount = 0;
+                            $idpat = 0;
+                            $idmedicin = 0;
+                            $available = 0;
+                            $new = 0;
+                            $prev = 0;
+                            $cost = 0;
+                            $rev = 0;
+                            $allcost = 0;
+                            $tot = 0;
+                            $errors = array('patemail' => '','sympterror' => '','diagnosiserror' => '', 'mederror' => '','amounterror' => '','dateerror'=>'','lesserror' => '');
+                            $patient_email = $symptom = $diagnosis = $medicine_name = $message = '';
+                            $date = '0000-00-00';
                             $message = 'Medicine Allocated';
                         }
                         else{
@@ -164,9 +186,8 @@ if(isset($_POST['submit'])){
 
     }
 
-
-
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -214,6 +235,18 @@ if(isset($_POST['submit'])){
             text-transform: capitalize;
             font-size: larger;
             color: red;
+        }
+        #far-end{
+            overflow: auto;
+            height:50vh;
+            font-family: 'Open Sans', sans-serif;          
+            margin: 0;
+            text-shadow: 0px 0px 1px black;
+            font-size:large;
+            width:70vh;
+        }
+        #amt{
+            border: 1px solid #5390d9;
         }
         
 
@@ -277,9 +310,42 @@ if(isset($_POST['submit'])){
         <button name="submit">submit</button>
 
     </form>
-        
+
     </div>
 <!-- //end of content -->
+    <div id ="far-end">
+    <h2 style="font-size: large;" id = "amt">AVAILABLE MEDICINE</h2>
+        <table id= "amt">
+                <tr id= "amt">
+                    <th id= "amt">Medicine Name</th>
+                    <th id= "amt">Medicine Type</th>
+                    <th id= "amt">Available Amount</th>                        
+                </tr>
+                <?php   
+                    foreach($datamed as $dat): ?>
+                        <div>
+                            <tr id= "amt">
+                                <td id= "amt"> <h6> <?php echo htmlspecialchars($dat['name']); ?> </h6> </td>
+                                <td id= "amt"> <h6> <?php 
+                                foreach($datatype as $dat2): 
+                                    if($dat2['id'] == $dat['type'])
+                                    {
+                                        echo htmlspecialchars($dat2['type']);  
+                                    } endforeach; ?> </h6> </td>
+                                <td id="amt"> <h6> <?php
+                                if(empty($dat['availableamt'])){
+                                    echo htmlspecialchars('0');
+                                }
+                                else{
+                                 echo htmlspecialchars($dat['availableamt']); } ?> </h6> </td>
+                            </tr> 
+                        </div>
+                <?php endforeach;
+                mysqli_free_result($resultmed);
+                mysqli_free_result($resulttype);
+                 ?>
+                </table>
+    </div>
 </div>
 <?php 
 

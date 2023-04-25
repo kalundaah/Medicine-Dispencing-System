@@ -1,10 +1,6 @@
-0,1,2
-1,epinephrine,"This medication is used to treat severe allergic reactions, such as anaphylaxis, which can be life-threatening."
-2,antibiotics,"Antibiotics are used to treat bacterial infections and are considered high priority when treating serious infections such as pneumonia, meningitis, sepsis, and infections in immunocompromised patients."
-3,anticoagulants,Anticoagulants are medications used to prevent blood clots and are considered high priority in treating conditions such as deep vein thrombosis (DVT) and pulmonary embolism.
-4,immunoglobulins,"These are medications that contain antibodies and are used to treat autoimmune diseases, immune deficiencies, and some infections. They are considered high priority in treating severe infections and immune-related disorders."
-5,insulin,"Insulin is used to treat diabetes, a chronic condition that can lead to serious health complications if not managed properly."
-6,chemotherapy drugs,Chemotherapy drugs are used to treat cancer and are considered high priority due to the life-threatening nature of the disease.
-7,narcan,Narcan is a medication used to reverse the effects of an opioid overdose and is considered high priority in the current opioid epidemic.
-8,antivirals,"Antiviral medications are used to treat viral infections such as influenza, hepatitis, and HIV and are considered high priority in treating these serious conditions."
-9,pain management ,"Pain management medications such as opioids are considered high priority in managing acute pain, such as post-surgery pain, or in treating chronic pain in patients who cannot manage their pain with other therapies."
+0,1
+1,anaesthetic
+2,muscle relaxants
+3,pain management
+4,antiallergies
+5,antidotes
