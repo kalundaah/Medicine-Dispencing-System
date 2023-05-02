@@ -26,6 +26,9 @@ while($row = $result->fetch_assoc()) {
         #stock{
             border-bottom: 10px solid #111d13;
         }
+        #bar-graph{
+         background-color:transparent;
+        }
     </style>
     <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script>

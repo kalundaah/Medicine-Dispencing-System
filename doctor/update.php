@@ -86,7 +86,7 @@ if(isset($_POST['submit']))
         <div class="errormessage" style="color:red; margin:20px,0;"><?php echo($errors['email']); ?></div>
 
         <button style="margin:10px;" name="submit" >submit</button>
-        
+        </form>
         <table>
                     
             <tr>
