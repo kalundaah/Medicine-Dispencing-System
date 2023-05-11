@@ -1,5 +1,7 @@
 <?php
-
+error_reporting(E_ERROR | E_PARSE);
+unlink("patient/data.txt");
+unlink("doctor/data.txt");
 ?>
 
 <!DOCTYPE html>

@@ -169,6 +169,11 @@ require("dbconnect.php");
             border-radius: 25px;
             padding: 20px;
         }
+        #all{
+            display:flex;
+            flex-direction: row;
+            justify-content: space-around;
+        }
     </style>
     <script src="https://kit.fontawesome.com/57a72e588d.js" crossorigin="anonymous"></script>
 </head>
