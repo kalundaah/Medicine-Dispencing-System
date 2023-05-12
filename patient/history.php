@@ -121,7 +121,6 @@ endforeach;
 </div>
 <?php 
     //free result from memory
-    mysqli_free_result($resulthis);
     mysqli_free_result($resultmed);
     mysqli_free_result($resultdoc);
 

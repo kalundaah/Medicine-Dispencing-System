@@ -152,7 +152,7 @@ if(isset($_POST['submit'])){
                         <th>Expected time for refill</th>   
                     </tr>
                     <?php   
-                        $sqlhis = 'SELECT patient,medicine,time,expected FROM allocation' ;
+                        $sqlhis = "SELECT patient,medicine,time,expected FROM allocation WHERE patient = '.$idpat.'" ;
                         $sqlmed = 'SELECT id,name FROM medicine';
 
                         //make query and get result
