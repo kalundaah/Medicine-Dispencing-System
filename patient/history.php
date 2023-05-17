@@ -20,7 +20,7 @@ endforeach;
     <title>History page</title>
     <style>
         #history{
-            border-bottom: 10px solid #111d13;
+            border-bottom: 10px solid #f4e285;
         }
 
         #allocatedcol{

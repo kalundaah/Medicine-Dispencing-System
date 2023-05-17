@@ -18,7 +18,7 @@ include('patientoverall.php');
     <title>Home Page</title>
     <style>
         #home{
-            border-bottom: 10px solid #111d13;
+            border-bottom: 10px solid #f4e285;
         }
     </style>
 </head>

@@ -126,7 +126,7 @@ if(isset($_POST['submit'])){
     <title>Patient Data</title>
     <style>
         #order{
-            border-bottom: 10px solid #111d13;
+            border-bottom: 10px solid #f4e285;
         }
         td,tr{
             border: 1px solid black;

@@ -22,7 +22,7 @@ endforeach;
     <title>Profile</title>
     <style>
         #profile{
-            border-bottom: 10px solid #111d13;
+            border-bottom: 10px solid #f4e285;
         }
         th,td{
             border: 1px solid black;

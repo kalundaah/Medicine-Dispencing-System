@@ -253,7 +253,7 @@ if(isset($_POST['submit'])){
     </style>
 </head>
 <body>
-    <div id="central">
+<div id="central">
         <div id="all">
             <a href="allocate.php" style="text-decoration: none; color:white;"><div class="allmenu" id="entry">ENTRY</div></a>
             <a href="history.php" style="text-decoration: none; color:white;"><div class="allmenu" id="history">HISTORY</div></a>
@@ -313,7 +313,7 @@ if(isset($_POST['submit'])){
 
     </div>
 <!-- //end of content -->
-    <div id ="far-end">
+<div id ="far-end">
     <h2 style="font-size: large;" id = "amt">AVAILABLE MEDICINE</h2>
         <table id= "amt">
                 <tr id= "amt">

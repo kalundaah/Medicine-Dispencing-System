@@ -2,13 +2,17 @@
 include('index.php');
 require('dbconnect.php');
 $find = "";
-$patid = 0;
+$medid = 0;
 $medname = '';
 $cost = 0;
+$ncost = 0;
+$namt = 0;
 $amount = 0;
-$det = '';
+$det = $nname = '';
+
 $errorfind = array('med' => '');
-$errorupdate = array('name =>', 'cost' => '', 'amt' => '');
+$errorupdate = array('name' =>'', 'cost' => '', 'amt' => '');
+$success = '';
 
 if (isset($_POST['submit'])) {
     if (empty($_POST['findname'])) {
@@ -16,7 +20,7 @@ if (isset($_POST['submit'])) {
     } else {
         $find = $_POST['findname'];
     }
-    if (array_filter($errors)) {
+    if (array_filter($errorfind)) {
     } else {
         $sqlmed = 'SELECT id,name,cost,availableamt FROM medicine';
         //make query and get result
@@ -24,20 +28,61 @@ if (isset($_POST['submit'])) {
         //fetch the resulting rows
         $datamed = mysqli_fetch_all($resultmed, MYSQLI_ASSOC);
         foreach ($datamed as $datmed) :
-            if ($find == $datpat['name']) {
-                $patid = $datpat['id'];
+            if ($find == $datmed['name']) {
+                $medid = $datmed['id'];
                 $medname = $datmed['name'];
                 $cost = $datmed['cost'];
                 $amount = $datmed['availableamt'];
             }
         endforeach;
-        if ($patid != 0) {
+        if ($medid != 0) {
             $det = "Patient details found";
         } else {
             $det = "Patient details not found";
         }
     }
 }
+if (isset($_POST['submit2'])) {
+    if (empty($_POST['updname'])) {
+        $errorupdate['name'] = "Cannot change to empty";
+    } else {
+        $nname = $_POST['updname'];
+    }
+    if (empty($_POST['updcost'])) {
+        $errorupdate['cost'] = "Cannot change to empty";
+    } else {
+        $ncost = $_POST['updcost'];
+    }
+    if (empty($_POST['updamt'])) {
+        $errorupdate['amt'] = "Cannot change to empty";
+    } else {
+        $namt = $_POST['updamt'];
+    }
+    if(array_filter($errorupdate)){}
+    else{
+        $sqlupdate = "UPDATE medicine SET name = '$nname', cost = '$ncost', availableamt = '$namt' WHERE id =" . $medid;
+       // $sqlupdate = "UPDATE medicine SET name = '$medname', cost = '$cost', availableamt = '$amount' WHERE id =" . $medid;
+        // $sqlupdate = "UPDATE `medicine` SET `name` = '$medname', `cost` = '$cost', `availableamt` = '$amount' WHERE `medicine`.`id` = $medid";
+        if(mysqli_query($conn,$sqlupdate)){
+            sleep(3);
+            $success = "Medicine edited successfully";
+            $find = "";
+            $medid = 0;
+            $medname = '';
+            $cost = 0;
+            $amount = 0;
+            $det = '';
+            $errorfind = array('med' => '');
+            $errorupdate = array('name' =>'', 'cost' => '', 'amt' => '');
+        }
+        else {
+            echo "Error updating record: " . mysqli_error($conn);
+        }
+
+    }
+
+}
+    
 ?>
 
 <!DOCTYPE html>
@@ -53,6 +98,15 @@ if (isset($_POST['submit'])) {
         }
         #updat{
             background-color: #e63946;
+        }
+        #far-end{
+            height:50vh;
+            font-family: 'Open Sans', sans-serif;          
+            margin: 0;
+            text-shadow: 0px 0px 1px black;
+            font-size:large;
+            width:70vh;
+            padding-right: 40vh;            
         }
     </style>
 </head>
@@ -71,14 +125,37 @@ if (isset($_POST['submit'])) {
 
             <label for="medicine name" style="margin:20px,0;">Medicine name: </label>
             <input class="fix" type="text" name="findname" value="<?php echo htmlspecialchars($find); ?>">
-            <div class="errormessage" style="color:red; margin:20px,0;"><?php echo ($errors['med']); ?></div>
+            <div class="errormessage" style="color:red; margin:20px,0;"><?php echo ($errorfind['med']); ?></div>
 
             <button style="margin:10px;" name="submit">submit</button>
         </form>
-    </div>      
+    </div>
+    
 <!-- //end of content -->
 </div>
+<div id="far-end">
+    <h2 style="font-size: large;" id = "amt">MEDICINE DETAILS</h2>
+    <div class="errormessage" style="color:red; margin:20px,0;"><?php echo ($success); ?></div>
+    
+    <div id="meddetails">
+        <form action="updmed.php" method="POST" style="display: flex; flex-direction: column; margin: 50px 20%;">
 
+        <label for="medicine name" style="margin:20px,0;">Medicine name: </label>
+        <input class="fix" type="text" name="updname" value="<?php echo htmlspecialchars($medname); ?>">
+        <div class="errormessage" style="color:red; margin:20px,0;"><?php echo ($errorupdate['name']); ?></div>
+
+        <label for="medicine cost" style="margin:20px,0;">Medicine Cost: </label>
+        <input class="fix" type="integer" name="updcost" value="<?php echo htmlspecialchars($cost); ?>">
+        <div class="errormessage" style="color:red; margin:20px,0;"><?php echo ($errorupdate['cost']); ?></div>
+
+        <label for="medicine amount" style="margin:20px,0;">Medicine amount: </label>
+        <input class="fix" type="integer" name="updamt" value="<?php echo htmlspecialchars($amount); ?>">
+        <div class="errormessage" style="color:red; margin:20px,0;"><?php echo ($errorupdate['amt']); ?></div>
+
+        <button style="margin:10px;" name="submit2">Update</button>
+        </form>
+    </div>
+</div>  
 </body>
 
 </html>

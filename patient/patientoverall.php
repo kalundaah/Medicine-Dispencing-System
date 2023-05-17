@@ -32,6 +32,7 @@
             height:15%;
             font-size:small;
             margin-bottom:10px;
+            flex-grow: 1;
         }
         #sidepane{
             display:flex;
@@ -128,7 +129,7 @@
     <script src="https://kit.fontawesome.com/57a72e588d.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div id="navpane">
+    <div id ="navpane">
         <a href="home.php" style="text-decoration: none; color:white;"><div class="elements" id="navhome"><h5>Home</h5></div></a>
         <a href="order.php" style="text-decoration: none; color:white;"><div class="elements" id="navorder"><h5>Data</h5></div></a>
         <a href="history.php" style="text-decoration: none; color:white;"><div class="elements" id="navhistory"><h5>History</h5></div></a>
