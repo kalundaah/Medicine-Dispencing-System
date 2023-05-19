@@ -133,16 +133,25 @@
         table{
             border-collapse: collapse;
         }
+        #signout{
+            display:flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            border-radius: 20%;
+            border: 2px solid white;
+            width: 30px;
+        }
     </style>
     <script src="https://kit.fontawesome.com/57a72e588d.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div id="navpane">
         <div><h5 id ="doctor-name">Doctor <?php echo $fname."<br>"; ?> </h5></div>
-        <a href="home.php" style="text-decoration: none; color:white;"><div class="elements" id="navhome"><h5>Home</h5></div></a>
+        <!-- <a href="home.php" style="text-decoration: none; color:white;"><div class="elements" id="navhome"><h5>Home</h5></div></a>
         <a href="stock.php" style="text-decoration: none; color:white;"><div class="elements" id="navorder"><h5>Stock</h5></div></a>
         <a href="allocate.php" style="text-decoration: none; color:white;"><div class="elements" id="navhistory"><h5>Allocate</h5></div></a>
-        <a href="update.php" style="text-decoration: none; color:white;"><div class="elements" id="navprofile"><h5>Patient</h5></div></a>
+        <a href="update.php" style="text-decoration: none; color:white;"><div class="elements" id="navprofile"><h5>Patient</h5></div></a> -->
         <a href="/mda/index.php" style="text-decoration: none; color:white;"><div class="elements" ><h5>Sign out</h5></div></a>
     </div>
     <div id="con">

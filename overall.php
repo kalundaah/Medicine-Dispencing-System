@@ -17,23 +17,31 @@ unlink("doctor/data.txt");
         body{
             font-family: 'Open Sans', sans-serif;          
             margin: 0;
+            background-image:url('img/logback.jpg');
+
         }
         #navpane{
             display:flex;
             flex-direction: row;
-            background-color: #000000;
+            background-color:darkslategrey;
             justify-content: space-evenly;
-            color: antiquewhite;
+            color: white;
             text-shadow: 0 0 3px black;
+            padding: 5px;
+            height:15%;
+            font-size:small;
+            flex-grow: 1;
         }
         #sidepane{
             display:flex;
             flex-direction: column;
-            background-color: #000000;
+            background-color: darkslategrey;
             justify-content: space-evenly;
             height:100vh;
-            color:antiquewhite;
+            color:white;
             text-shadow: 0 0 4px black;
+            width:auto;
+           
         }
         .elements{
            height:10vh;
@@ -42,9 +50,10 @@ unlink("doctor/data.txt");
            display:flex;
            height:10vh;
            margin: 0 auto;
-           border-bottom: 10px solid white;
            justify-content: center;
            text-align: center;
+           padding: 5px;
+           
         }
         h5:hover{
             transform:scale(1.5);
@@ -70,7 +79,7 @@ unlink("doctor/data.txt");
             justify-content: start;
         }
         #central{
-            background-color:whitesmoke;
+            background-color:transparent;
             width: 100%;
             color: black;
             text-shadow: 0 0 1px black;
@@ -83,18 +92,18 @@ unlink("doctor/data.txt");
 </head>
 <body>
     <div id="navpane">
-        <div class="elements" id="navhome"><h5></h5></div>
-        <div class="elements" id="navorder"><h5></h5></div>
-        <div class="elements" id="navhistory"><h5></h5></div>
-        <div class="elements" id="navprofile"><h5></h5></div>
+        <div class="elements" id="navhome"><h5>Home</h5></div>
+        <div class="elements" id="navorder"><h5>Data</h5></div>
+        <div class="elements" id="navhistory"><h5>History</h5></div>
+        <div class="elements" id="navprofile"><h5>Profile</h5></div>
     </div>
     <div id="con">
         <div id="enlarged">
             <div id="sidepane">
-                <div class="side-elements" id="home"><h5></h5></div>
-                <div class="side-elements" id="order"><h5></h5></div>
-                <div class="side-elements" id="history"><h5></h5></div>
-                <div class="side-elements" id="profile"><h5></h5></div>
+                <div class="side-elements" id="home"><h5>Home</h5></div>
+                <div class="side-elements" id="order"><h5>Data</h5></div>
+                <div class="side-elements" id="history"><h5>History</h5></div>
+                <div class="side-elements" id="profile"><h5></h5>Profile</div>
             </div>
         </div>
         <!-- <div id="central">aa</div>

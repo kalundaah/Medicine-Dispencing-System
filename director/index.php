@@ -31,15 +31,16 @@ require("dbconnect.php");
             flex-direction: row;
             background-color: black;
             justify-content: space-evenly;
-            color: antiquewhite;
+            color: #fca311;
             text-shadow: 0 0 3px black;
             border: 2px solid black;
             /* border-radius: 12px; */
             padding: 5px;
-            height: 15%;
+            height: 7vh;
             font-size: small;
             margin-bottom: 10px;
             margin-top: 0;
+
         }
 
         #sidepane {
@@ -180,10 +181,10 @@ require("dbconnect.php");
 
 <body>
     <div id="navpane">
-        <div>
+      <div>
             <h5 id="doctor-name">Admin </h5>
         </div>
-        <a href="home.php" style="text-decoration: none; color:white;">
+         <!--  <a href="home.php" style="text-decoration: none; color:white;">
             <div class="elements" id="navhome">
                 <h5>Home</h5>
             </div>
@@ -203,11 +204,16 @@ require("dbconnect.php");
                 <h5>Medicine</h5>
             </div>
         </a>
+        <a href="doc.php" style="text-decoration: none; color:white;">
+            <div class="elements" id="navdoc">
+                <h5>Doctor</h5>
+            </div>
+        </a>-->
         <a href="/mda/index.php" style="text-decoration: none; color:white;">
             <div class="elements">
                 <h5>Sign out</h5>
             </div>
-        </a>
+        </a> 
     </div>
     <div id="con">
         <div id="enlarged">
@@ -241,6 +247,14 @@ require("dbconnect.php");
                         <div class="icons"><i class="fa-solid fa-tablets"></i></div>
                         <div class="text">
                             <h5>Medicine</h5>
+                        </div>
+                    </div>
+                </a>
+                <a href="doc.php" style="text-decoration: none; color:white;">
+                    <div class="side-elements" id="doc">
+                        <div class="icons"><i class="fa-solid fa-stethoscope"></i></div>
+                        <div class="text">
+                            <h5>Doctor</h5>
                         </div>
                     </div>
                 </a>

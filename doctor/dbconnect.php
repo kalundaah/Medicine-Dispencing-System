@@ -9,7 +9,7 @@ if(!$conn){
     echo 'connection failed' . mysqli_connect_error();
 }
 
-$sql = 'SELECT id,firstname,lastname,staffid,email FROM doctor';
+$sql = 'SELECT id,firstname,lastname,email FROM doctor';
 
 //make query and get result
 $result = mysqli_query($conn, $sql);
@@ -20,7 +20,6 @@ foreach($data as $dat):
     if($email == $dat['email']){
         $fname = $dat['firstname'];
         $lname = $dat['lastname'];
-        $staff = $dat['staffid'];
 }
 endforeach;
 ?>

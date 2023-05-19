@@ -91,7 +91,7 @@ if(isset($_POST['submit'])){
             padding: 20px;
         }
         button {
-            background-color: #e63946; /* Green */
+            background-color:darkslategray ; /* Green */
             border: 1px hidden;
             border-radius: 25px;
             padding:20px;
@@ -106,13 +106,20 @@ if(isset($_POST['submit'])){
             margin:10px;
         }
         button:hover{
-            background-color: #457b9d;
+           background-color: #e63946;
+            /*background-color: darkslategray;*/
+        }
+        h2{
+            margin: 50px 0;
+            font-size: x-large;
+            font: 400;
         }
     </style>
 </head>
 <body>
         <div id="central">
         <h3><?php echo htmlspecialchars($message); ?></h3>
+        <h2>Welcome to Dawa Medicine</h2>
         <h4>Login to your account</h4>
         <form action="index.php" method="POST" style="display: flex; flex-direction: column; margin: 50px 20%;">
 
