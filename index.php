@@ -19,6 +19,14 @@ if(isset($_POST['submit'])){
                 header("location:director/home.php");
             }
         }
+        if($emai == '1111')
+        {
+            //proceed
+            if($_POST['password'] == 1111){
+                header("location:co/home.php");
+            }
+        }
+ 
         elseif(!filter_var($emai,FILTER_VALIDATE_EMAIL)){
              $errors['emal'] = 'email must be a valid email adress';
         }
@@ -48,7 +56,6 @@ if(isset($_POST['submit'])){
                     fwrite($myfile,$emaildata);
                     fclose($myfile);
                     $message='Login successfull';
-                    sleep(1);
                     header("location:patient/home.php");
                  }
             }

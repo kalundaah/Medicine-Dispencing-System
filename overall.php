@@ -92,18 +92,18 @@ unlink("doctor/data.txt");
 </head>
 <body>
     <div id="navpane">
-        <div class="elements" id="navhome"><h5>Home</h5></div>
-        <div class="elements" id="navorder"><h5>Data</h5></div>
-        <div class="elements" id="navhistory"><h5>History</h5></div>
-        <div class="elements" id="navprofile"><h5>Profile</h5></div>
+        <div class="elements" id="navhome"><h5></h5></div>
+        <div class="elements" id="navorder"><h5></h5></div>
+        <div class="elements" id="navhistory"><h5></h5></div>
+        <div class="elements" id="navprofile"><h5></h5></div>
     </div>
     <div id="con">
         <div id="enlarged">
             <div id="sidepane">
-                <div class="side-elements" id="home"><h5>Home</h5></div>
-                <div class="side-elements" id="order"><h5>Data</h5></div>
-                <div class="side-elements" id="history"><h5>History</h5></div>
-                <div class="side-elements" id="profile"><h5></h5>Profile</div>
+                <div class="side-elements" id="home"><h5></h5></div>
+                <div class="side-elements" id="order"><h5></h5></div>
+                <div class="side-elements" id="history"><h5></h5></div>
+                <div class="side-elements" id="profile"><h5></h5></div>
             </div>
         </div>
         <!-- <div id="central">aa</div>

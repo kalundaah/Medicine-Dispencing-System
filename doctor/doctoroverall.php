@@ -17,7 +17,7 @@
             margin: 0;
             text-shadow: 0px 0px 5px black;
             background-color: #f1faee;
-            font-size:medium;
+            font-size: larger;
         }
         #navpane{
             display:flex;
@@ -107,7 +107,7 @@
             justify-content: space-around;
         }
         button {
-            background-color: #e63946; /* Green */
+            background-color: #5390d9; /* Green */
             border: 1px hidden;
             border-radius: 25px;
             padding:20px;
@@ -142,6 +142,34 @@
             border: 2px solid white;
             width: 30px;
         }
+        .styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    /* font-family: sans-serif; */
+    font-family: 'Roboto', sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+.styled-table thead tr {
+    background-color: #5390d9;
+    color: #ffffff;
+    text-align: left;
+}
+.styled-table th,.styled-table td {
+    padding: 12px 15px;
+}
+.styled-table tbody tr {
+    border-bottom: 1px solid #5390d9;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #5390d9;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #5390d9;
+}
     </style>
     <script src="https://kit.fontawesome.com/57a72e588d.js" crossorigin="anonymous"></script>
 </head>

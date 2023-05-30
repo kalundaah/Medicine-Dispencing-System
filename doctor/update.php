@@ -87,8 +87,8 @@ if(isset($_POST['submit']))
 
         <button style="margin:10px;" name="submit" >submit</button>
         </form>
-        <table>
-                    
+        <table class = "styled-table">
+            <thead>        
             <tr>
                 <th>First Name</th>
                 <th>Last name</th>
@@ -96,6 +96,8 @@ if(isset($_POST['submit']))
                 <th>email</th>
                 <th>Phone Number</th>
             </tr>
+            </thead>
+            <tbody>
             <div>
                 <tr>
                     <td> <h2> <?php echo htmlspecialchars($first); ?> </h2></td> 
@@ -105,6 +107,7 @@ if(isset($_POST['submit']))
                     <td> <h2> <?php echo htmlspecialchars($phone); ?> </h2> </td>  
                 </tr>
             </div> 
+            </tbody>
         </table> 
     </div>
 <!-- //end of content -->

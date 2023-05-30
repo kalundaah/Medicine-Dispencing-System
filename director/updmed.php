@@ -116,6 +116,7 @@ if (isset($_POST['submit2'])) {
     <div id="all">
         <a href="reports.php" style="text-decoration: none; color:white;"><div class="allmenu" id="create">New Medicine</div></a>
         <a href="updmed.php" style="text-decoration: none; color:white;"><div class="allmenu" id="updat">Update medicine</div></a>
+        <a href="reorder.php" style="text-decoration: none; color:white;"><div class="allmenu" id="updatre">Check reorder</div></a>
     </div>
     <div id="emailrequest">
         <h3><?php echo htmlspecialchars($det); ?></h3>

@@ -24,15 +24,12 @@ endforeach;
         }
 
         #allocatedcol{
-            border: 2px solid black;
             height:80vh;
             color:whitesmoke;
-            background-color: #2d6a4f;
             overflow:auto;
         }
-        td,tr{
-            border: 1px solid white;
-        }
+        th,td{
+            border: 1px solid black}
         table{
             width:100%;
         }
@@ -43,8 +40,9 @@ endforeach;
     <div id="central">
         <h7> The following are your recent transactions in detail: </h7>
             <div id="allocatedcol">
-                <h4>YOUR PAST ALLOCATIONS</h4>
-                <table>
+                <h4 style="color: black;">YOUR PAST ALLOCATIONS</h4>
+                <table class="styled-table" style="color: black; font-size: larger;">
+                <thead>
                 <tr>
                      <th>patient</th>
                      <th>doctor</th>
@@ -53,6 +51,7 @@ endforeach;
                      <th>Previous Allocation</th>
                      <th>Expected time to end</th>
                 </tr>
+                </thead>
                 <?php  
                 
                 $sqlmed = 'SELECT id,name FROM medicine';
@@ -76,6 +75,7 @@ endforeach;
                     $dataall = mysqli_fetch_all($result2,MYSQLI_ASSOC); //patient
                     if(empty($dataall)){
                         $empty = 'N/A'; ?>
+                        <tbody>
                         <div>
                             <tr>
                                 <td> <h6> <?php echo htmlspecialchars($empty); ?> </h6></td> 
@@ -86,10 +86,11 @@ endforeach;
                                 <td> <h6> <?php echo htmlspecialchars($empty); ?> </h6> </td>  
                             </tr> 
                         </div>
-
+                        </tbody>
                     <?php }
 
                     foreach($dataall as $dat2): ?>
+                        <tbody>
                         <div>
                             <tr>
                                 <td> <h6> <?php echo htmlspecialchars($fname); ?> </h6></td> 
@@ -110,6 +111,7 @@ endforeach;
                                 <td> <h6> <?php echo htmlspecialchars($dat2['expected']); ?> </h6> </td>
                             </tr> 
                         </div>
+                        </tbody>
                 <?php endforeach;
                  ?>
                 </table>

@@ -145,12 +145,14 @@ if(isset($_POST['submit'])){
 <body>
     <div id="central">
         <div id="tab">
-            <table>
+            <table class = "styled-table" style="font-size: larger;">
+                    <thead>
                     <tr>
                         <th>medicine</th>
                         <th>Allocated Time</th>
                         <th>Expected time for refill</th>   
                     </tr>
+                    </thead>
                     <?php   
                         $sqlhis = "SELECT patient,medicine,time,expected FROM allocation WHERE patient = '.$idpat.'" ;
                         $sqlmed = 'SELECT id,name FROM medicine';
@@ -165,6 +167,7 @@ if(isset($_POST['submit'])){
 
                         if(empty($datahis)){
                             $empty = 'N/A'; ?>
+                            <tbody>
                             <div>
                                 <tr> 
                                     <td> <h6> <?php echo htmlspecialchars($empty); ?> </h6> </td>  
@@ -172,10 +175,12 @@ if(isset($_POST['submit'])){
                                     <td> <h6> <?php echo htmlspecialchars($empty); ?> </h6> </td>    
                                 </tr> 
                             </div>
+                            </tbody>
 
                         <?php }
 
                         foreach($datahis as $dat): ?>
+                            <tbody>
                             <div>
                                 <tr>
                                     <td> <h6> <?php 
@@ -188,6 +193,7 @@ if(isset($_POST['submit'])){
                                     <td> <h6> <?php echo htmlspecialchars($dat['expected']); ?> </h6> </td>
                                 </tr> 
                             </div>
+                            </tbody>
                     <?php endforeach;
                     ?>
                     </table>

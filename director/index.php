@@ -15,7 +15,7 @@ require("dbconnect.php");
         body {
             font-family: 'Open Sans', sans-serif;
             margin: 0;
-            font-size: medium;
+            font-size: larger;
             /* background-image: linear-gradient(45deg, transparent 20%, black 25%, transparent 25%),
                 linear-gradient(-45deg, transparent 20%, black 25%, transparent 25%),
                 linear-gradient(-45deg, transparent 75%, black 80%, transparent 0),
@@ -182,7 +182,7 @@ require("dbconnect.php");
 <body>
     <div id="navpane">
       <div>
-            <h5 id="doctor-name">Admin </h5>
+            <h5 id="doctor-name">Director</h5>
         </div>
          <!--  <a href="home.php" style="text-decoration: none; color:white;">
             <div class="elements" id="navhome">

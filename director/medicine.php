@@ -26,6 +26,9 @@ while($row = $result->fetch_assoc()) {
         #stock{
             border-bottom: 10px solid #111d13;
         }
+        #create{
+            background-color: #e63946;
+        }
         #bar-graph{
          background-color:transparent;
         }
@@ -57,6 +60,15 @@ while($row = $result->fetch_assoc()) {
 </head>
 <body>
     <div id="central">
+        <div id="all">
+          <a href="medicine.php" style="text-decoration: none; color:white;"><div class="allmenu" id="create">All medicine</div></a>
+          <a href="anaesthetic.php" style="text-decoration: none; color:white;"><div class="allmenu" id="updat">anaesthetic</div></a>
+          <a href="antiallergies.php" style="text-decoration: none; color:white;"><div class="allmenu" id="updat2">antiallergies</div></a>
+          <a href="antidotes.php" style="text-decoration: none; color:white;"><div class="allmenu" id="updat3">antidotes</div></a>
+          <a href="musclerelax.php" style="text-decoration: none; color:white;"><div class="allmenu" id="updat4">muscle relaxers</div></a>
+          <a href="other.php" style="text-decoration: none; color:white;"><div class="allmenu" id="updat5">other</div></a>
+          <a href="painman.php" style="text-decoration: none; color:white;"><div class="allmenu" id="updat6">pain management</div></a>
+        </div>
         <!-- <p style="font-size:5vw"> MED PAGE</p> -->
         <div id="bar-graph"></div>
     </div>

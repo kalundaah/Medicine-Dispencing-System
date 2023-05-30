@@ -244,12 +244,8 @@ if(isset($_POST['submit'])){
             text-shadow: 0px 0px 1px black;
             font-size:large;
             width:70vh;
-        }
-        #amt{
-            border: 1px solid #5390d9;
-        }
+        }  
         
-
     </style>
 </head>
 <body>
@@ -315,18 +311,21 @@ if(isset($_POST['submit'])){
 <!-- //end of content -->
 <div id ="far-end">
     <h2 style="font-size: large;" id = "amt">AVAILABLE MEDICINE</h2>
-        <table id= "amt">
-                <tr id= "amt">
-                    <th id= "amt">Medicine Name</th>
-                    <th id= "amt">Medicine Type</th>
-                    <th id= "amt">Available Amount</th>                        
+        <table class = "styled-table">
+            <thead>
+                <tr>
+                    <th>Medicine Name</th>
+                    <th>Medicine Type</th>
+                    <th>Available Amount</th>                        
                 </tr>
+            </thead>
                 <?php   
                     foreach($datamed as $dat): ?>
+                        <tbody>
                         <div>
-                            <tr id= "amt">
-                                <td id= "amt"> <h6> <?php echo htmlspecialchars($dat['name']); ?> </h6> </td>
-                                <td id= "amt"> <h6> <?php 
+                            <tr>
+                                <td> <h6> <?php echo htmlspecialchars($dat['name']); ?> </h6> </td>
+                                <td> <h6> <?php 
                                 foreach($datatype as $dat2): 
                                     if($dat2['id'] == $dat['type'])
                                     {
@@ -340,6 +339,7 @@ if(isset($_POST['submit'])){
                                  echo htmlspecialchars($dat['availableamt']); } ?> </h6> </td>
                             </tr> 
                         </div>
+                        </tbody>
                 <?php endforeach;
                 mysqli_free_result($resultmed);
                 mysqli_free_result($resulttype);

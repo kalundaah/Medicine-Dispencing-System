@@ -72,6 +72,8 @@ if(isset($_POST['submit']))
     <div id="all">
         <a href="reports.php" style="text-decoration: none; color:white;"><div class="allmenu" id="create">New Medicine</div></a>
         <a href="updmed.php" style="text-decoration: none; color:white;"><div class="allmenu" id="updat">Update medicine</div></a>
+        <a href="reorder.php" style="text-decoration: none; color:white;"><div class="allmenu" id="updatre">Check reorder</div></a>
+
     </div>
     <div class="errormessage" style="color:red; margin:100px,0;"><?php echo($suc);  ?></div>
         <!-- Form for creating new medicine -->

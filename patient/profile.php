@@ -37,8 +37,8 @@ endforeach;
 <body>
     <div id="central">
         <h7> Your details as per your last visit.</h7>
-        <table>
-                    
+        <table class = "styled-table">
+            <thead>        
             <tr>
                 <th>First Name</th>
                 <th>Last name</th>
@@ -46,6 +46,7 @@ endforeach;
                 <th>email</th>
                 <th>Phone Number</th>
             </tr>
+            </thead>
             <?php
                 $sqlpat = 'SELECT id,firstname,lastname,dob,email,phonenos FROM patient';
                 //make query and get result
@@ -54,6 +55,7 @@ endforeach;
                 $datapat = mysqli_fetch_all($resultpat,MYSQLI_ASSOC);
                 foreach($datapat as $dat2):
             ?>
+            <tbody>
             <div>
                 <tr>
 
@@ -64,7 +66,8 @@ endforeach;
                     <td> <h2> <?php echo htmlspecialchars($dat2['email']); ?> </h2> </td>
                     <td> <h2> <?php echo htmlspecialchars($dat2['phonenos']); ?> </h2> </td> 
                 </tr>
-            </div> 
+            </div>
+            </tbody> 
             
             <?php } endforeach;
             ?>

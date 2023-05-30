@@ -1,9 +1,5 @@
 <?php
 include('index.php');
-
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +16,7 @@ include('index.php');
     </style>
 </head>
 <body>
-    <div id="central"><p style="font-size:5vw"> Welcome Admin</p></div>
+    <div id="central"><p style="font-size:5vw"> Welcome Director</p></div>
 <!-- //end of content -->
 </div>
     
