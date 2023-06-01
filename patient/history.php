@@ -49,7 +49,7 @@ endforeach;
                      <th>medicine</th>
                      <th>Amount allocated</th>
                      <th>Previous Allocation</th>
-                     <th>Expected time to end</th>
+                     
                 </tr>
                 </thead>
                 <?php  
@@ -83,7 +83,7 @@ endforeach;
                                 <td> <h6> <?php echo htmlspecialchars($empty); ?> </h6> </td>
                                 <td> <h6> <?php echo htmlspecialchars($empty); ?> </h6> </td>
                                 <td> <h6> <?php echo htmlspecialchars($empty); ?> </h6> </td>
-                                <td> <h6> <?php echo htmlspecialchars($empty); ?> </h6> </td>  
+                                
                             </tr> 
                         </div>
                         </tbody>
@@ -108,7 +108,7 @@ endforeach;
                                     } endforeach; ?> </h6> </td>  
                                 <td> <h6> <?php echo htmlspecialchars($dat2['allocated']); ?> </h6> </td>  
                                 <td> <h6> <?php echo htmlspecialchars($dat2['time']); ?> </h6> </td>  
-                                <td> <h6> <?php echo htmlspecialchars($dat2['expected']); ?> </h6> </td>
+                                
                             </tr> 
                         </div>
                         </tbody>

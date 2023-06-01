@@ -80,7 +80,7 @@ if (isset($_POST['update'])) {
     if (array_filter($errors)) {
     } else {
         $sqlupd = "UPDATE patient SET firstname = '$first', lastname = '$last', dob = '$dob', phonenos = '$phone', email = '$pemail' WHERE id =" . $patid;
-        echo $sqlupd;
+        
         // "UPDATE `patient` SET `firstname` = 'rua', `lastname` = 'dak', `dob` = '2003-01-01' , `phonenos` = 0713572468, `email` = 'rudak@example.com' WHERE `patient`.`id` = 3";
 
         if (mysqli_query($conn, $sqlupd)) {

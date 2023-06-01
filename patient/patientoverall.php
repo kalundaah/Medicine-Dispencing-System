@@ -171,7 +171,7 @@
         <div id="enlarged">
             <div id="sidepane">
                 <a href="home.php" style="text-decoration: none; color:white;"><div class="side-elements" id="home"><div class="icons"><i class="fa-solid fa-home"></i></div><div class="text"><h5>Home</h5></div></div></a>
-                <a href="order.php" style="text-decoration: none; color:white;"><div class="side-elements" id="order"><div class="icons"><i class="fa-solid fa-magnifying-glass"></i></div><div class="text"><h5>Data</h5></div></div></a>
+                <a href="order.php" style="text-decoration: none; color:white;"><div class="side-elements" id="order"><div class="icons"><i class="fa-solid fa-magnifying-glass"></i></div><div class="text"><h5>Refill</h5></div></div></a>
                 <a href="history.php" style="text-decoration: none; color:white;"><div class="side-elements" id="history"><div class="icons"><i class="fa-solid fa-book"></i></div><div class="text"><h5>History</h5></div></div></a>
                 <a href="profile.php" style="text-decoration: none; color:white;"><div class="side-elements" id="profile"><div class="icons"><i class="fa-solid fa-user"></i></div><div class="text"><h5>Profile</h5></div></div></a>
             </div>

@@ -1,12 +1,14 @@
 <?php
 include('index.php');
 require('dbconnect.php');
+
 $find = "";
 $medid = 0;
 $medname = '';
 $cost = 0;
 $ncost = 0;
 $namt = 0;
+$nname = '';
 $amount = 0;
 $det = $nname = '';
 
@@ -36,9 +38,9 @@ if (isset($_POST['submit'])) {
             }
         endforeach;
         if ($medid != 0) {
-            $det = "Patient details found";
+            $det = "Medicine details found";
         } else {
-            $det = "Patient details not found";
+            $det = "Medicine details not found";
         }
     }
 }
@@ -61,10 +63,8 @@ if (isset($_POST['submit2'])) {
     if(array_filter($errorupdate)){}
     else{
         $sqlupdate = "UPDATE medicine SET name = '$nname', cost = '$ncost', availableamt = '$namt' WHERE id =" . $medid;
-       // $sqlupdate = "UPDATE medicine SET name = '$medname', cost = '$cost', availableamt = '$amount' WHERE id =" . $medid;
-        // $sqlupdate = "UPDATE `medicine` SET `name` = '$medname', `cost` = '$cost', `availableamt` = '$amount' WHERE `medicine`.`id` = $medid";
+
         if(mysqli_query($conn,$sqlupdate)){
-            sleep(3);
             $success = "Medicine edited successfully";
             $find = "";
             $medid = 0;
